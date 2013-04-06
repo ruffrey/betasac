@@ -1,0 +1,33 @@
+<% if( !item ) { %>
+
+	<h1>That beta does not exist, or was removed.</h1>
+
+<% } else { %>
+<script>
+$(function(){
+	ApiCall('/account/<%=item.account_id%>?/json/', function(data) {
+		$('#acct_<%=item.account_id%>').append(data.account.username);
+	});
+});
+</script>
+	<span class="label label-info pull-right">BETA TEST</span>
+	<h1>
+		<%=item.title%>
+		&nbsp;&nbsp;
+		<a class="btn" id="acct_<%=item.account_id%>" 
+			href="/account/<%=item.account_id%>">
+		<i class="icon-user"></i>&nbsp;
+		&nbsp;</a>
+		
+	</h1>
+	
+	<h4><%=item.start_date.toFormat('DDD YYYY-MM-DD H:MI P')%> 
+		to <%=item.end_date.toFormat('DDD YYYY-MM-DD H:MI P')%></h4>
+
+	<p><%=item.description%></p>
+
+	<%=JSON.stringify(item)%>
+
+
+<% } %>
+

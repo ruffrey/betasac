@@ -1,0 +1,70 @@
+
+<div class="row-fluid">
+	
+<div class="span6">
+<h3>log in with betasac account</h3>
+<form method="post" action="/login">
+	
+	<label>username</label>
+	<input type="text" name="username" />
+	
+	<label>password</label>
+	<input type="password" name="password" />
+	
+	<br />
+	<button type="submit" class="btn btn-primary">
+		go&nbsp;<i class="icon-arrow-right icon-white"></i>
+	</button>
+</form>	
+
+<br />
+<a href="javascript:void(0);" onclick="$('#loginform').fadeToggle()" 
+	class="btn btn-small">or register</a>
+
+<div class="well<%=(!A.username?" hide":"")%>" id="loginform">
+	<form method="post" action="/register">
+		
+		<label>username</label>
+		<input type="text" name="username" value="<%=A.username||""%>" />
+		
+		<label>password</label>
+		<input type="password" name="password" value="<%=A.password||""%>" />
+		
+		<label>confirm password</label>
+		<input type="password" name="confirmPassword" 
+			value="<%=A.confirmPassword||""%>" />
+		
+		<label>email</label>
+		<input type="text" name="email" 
+			value="<%=A.email||""%>" />
+		
+		<label>first name</label>
+		<input type="text" name="givenName" 
+			value="<%=A.givenName||""%>" />
+		
+		<label>last name</label>
+		<input type="text" name="familyName" 
+			value="<%=A.familyName||""%>" />
+		
+		
+		<br />
+		
+		<button type="submit" class="btn btn-primary">
+			register 
+			&nbsp;
+			<i class="icon-plus icon-white"></i>
+		</button>
+		
+	</form>
+</div>
+	
+
+</div>
+<div class="span6">
+	<h3>log in / create account using</h3>
+	<a href="/auth/google" class="btn btn-primary">Google</a>
+
+</div>
+
+</div>
+

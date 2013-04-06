@@ -1,0 +1,13 @@
+
+
+<% if(!account) { %>
+	
+	<h1>Can't find <%=title%></h1>
+	
+	<h2>:-/</h2>
+	
+<% } else { %>
+	
+	<%=JSON.stringify(account)%>
+	
+<% } %>

@@ -1,0 +1,13 @@
+<%var items;items=items||[]%>
+<h1>Apps in Beta</h1>
+
+<% for(var i=0; i<items.length; i++) { %>
+
+<div class="well">
+<h3>
+	<a href="/item/<%=items[i]._id%>"><%=items[i].title%></a>
+</h3>
+<%=JSON.stringify(items[i])%>
+</div>
+
+<% } %>

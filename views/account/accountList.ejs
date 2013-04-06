@@ -1,0 +1,10 @@
+
+<% for(var i=0, len=accounts.length; i<len; i++) { %>
+
+<div class="well">
+	<%=JSON.stringify(accounts[i])%>
+	<button onclick="ApiCall('/api/account/kill/<%=accounts[i]._id%>');$(this).parent().remove();"
+		class="btn btn-mini btn-warning"><i class='icon-remove icon-white'></i></button>
+</div>
+
+<% } %>
