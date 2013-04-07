@@ -8,6 +8,7 @@ AccountSchema = mongoose.Schema({
 	username: 	String,
 	password: 	String,
 	openId: 	String,
+	admin:		Boolean,
 	name: {
 		familyName: String,
 		givenName: String,

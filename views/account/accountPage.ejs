@@ -1,4 +1,4 @@
-
+<% var account;account=account||false; %>
 
 <% if(!account) { %>
 	
@@ -8,6 +8,25 @@
 	
 <% } else { %>
 	
+	<h6>User account</h6>
+	
+	<h1><%= ( account.username || account._id ) %></h1>
 	<%=JSON.stringify(account)%>
+	
+	<% if(user && user.admin && !account.admin) { %>
+	
+		<button onclick="ApiCall('/api/account/makeAdmin/<%=account._id%>');$(this).remove();"
+		class="btn btn-mini btn-success">
+		make admin</button>
+		
+	
+	<% } else if(user && user.admin) { %>
+	
+		
+		<button onclick="ApiCall('/api/account/unmakeAdmin/<%=account._id%>');$(this).remove();"
+		class="btn btn-mini btn-warning">
+		unmake admin</button>
+		
+	<% } %>
 	
 <% } %>

@@ -9,13 +9,15 @@ exports.get = function(req, res) {
 			{username: req.params.id},
 			{openId: req.params.id}
 			
-		]).exec( function(err, account) {
+		])
+		.limit(1)
+		.exec( function(err, account) {
 			
-			if(account.length>0 || err)
+			if(err || (account && account.length>0) )
 			{
 				return res.render('account/accountPage.ejs', {
 					title: account.username || req.params.id,
-					account: account,
+					account: account instanceof Array ? account[0] : account,
 					errors: err
 				});
 			}
@@ -51,6 +53,26 @@ exports.api = {
 				errors: err ? [err] : [],
 				success: !err,
 				message: err || "Killed user"
+			});
+		});
+	},
+	
+	makeAdmin: function(req, res) {
+		Account.findByIdAndUpdate(req.params.id, {admin: true}, function(err) {
+			res.send({
+				errors: err ? [err] : [],
+				success: !err,
+				message: err || "Set admin"
+			});
+		});
+	},
+	
+	unmakeAdmin: function(req, res) {
+		Account.findByIdAndUpdate(req.params.id, {admin: false}, function(err) {
+			res.send({
+				errors: err ? [err] : [],
+				success: !err,
+				message: err || "Set NOT admin"
 			});
 		});
 	}

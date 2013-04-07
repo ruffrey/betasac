@@ -1,16 +1,42 @@
 <% if( !item ) { %>
 
-	<h1>That beta does not exist, or was removed.</h1>
+	<h1>Either that beta does not exist, or was removed.</h1>
 
 <% } else { %>
+
+
 <script>
 $(function(){
 	ApiCall('/account/<%=item.account_id%>?/json/', function(data) {
-		$('#acct_<%=item.account_id%>').append(data.account.username);
+		if(data.account) 
+		{
+			$('#acct_<%=item.account_id%>').append(data.account.username);
+		}
 	});
 });
 </script>
-	<span class="label label-info pull-right">BETA TEST</span>
+
+	<%
+		switch(item.test_type) 
+		{
+			case "alpha":
+	%>			<span class="label label-important pull-right">Alpha Test</span>
+			
+	<%		break;
+			
+			case "beta":	
+	%>			<span class="label label-info pull-right">Beta Test</span>
+	
+	<%		break;
+			
+			default:
+	%>
+			<span class="label label-inverse pull-right"><%=item.test_type%> Test</span>
+	<%
+			
+		}
+	%>
+	
 	<h1>
 		<%=item.title%>
 		&nbsp;&nbsp;
@@ -19,13 +45,24 @@ $(function(){
 		<i class="icon-user"></i>&nbsp;
 		&nbsp;</a>
 		
+		<%
+			if(item.account_id && user && user._id
+				&& item.account_id.toString() == user._id.toString())
+			{
+		%>
+			<a class="btn" href="/item/edit/<%=item._id%>">
+				<i class="icon-edit"></i>&nbsp;Edit</a>
+			
+		<%	}
+		%>
 	</h1>
 	
 	<h4><%=item.start_date.toFormat('DDD YYYY-MM-DD H:MI P')%> 
 		to <%=item.end_date.toFormat('DDD YYYY-MM-DD H:MI P')%></h4>
 
 	<p><%=item.description%></p>
-
+	
+	
 	<%=JSON.stringify(item)%>
 
 

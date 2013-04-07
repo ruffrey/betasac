@@ -16,9 +16,29 @@ exports.get = function(req, res) {
 		
 	Item.findOne({ _id: req.params.id }, function(err, item) {
 		res.render('item/item', {
-			title: err || item ? item.title : req.params.id,
+			title: err || ( item ? item.title : req.params.id) ,
 			item: item,
 			errors: err
+		});
+	});
+	
+};
+
+exports.getEdit = function(req, res) {
+		
+	Item.findOne({ _id: req.params.id }, function(err, item) {
+		
+		// is this the same user who posted it
+		if(item && item.account_id && item.account_id.toString() != req.user._id.toString())
+		{
+			err = ['Editing not allowed - this is not yours'];
+		}
+		
+		res.render('item/create', {
+			title: err || item ? item.title : req.params.id,
+			a: item,
+			errors: err,
+			edit: true
 		});
 	});
 	
@@ -53,20 +73,38 @@ exports.api = {
 // POST
 exports.create = function(req, res) {
 	
-    new Item({
+	var test_type = req.body.test_type || "";
+	
+	if( test_type instanceof Array )
+	{
+		test_type = test_type[0];
+	}
+	
+	var item_update = {
 		
 		last_updated:  	new Date(),
 		account_id: 	req.user, // which account posted
 		title:			req.body.title || "",
+		test_type:		test_type,
 		description: 	req.body.description || "",
 		website: 		req.body.website || "",
-		start_date: 	req.body.start_date || new Date(),
-		end_date: 		req.body.end_date || new Date(),
-		genre: 			req.body.genre || "",
-		contact: 		req.body.contact || "",
-		report:			[]
+		start_date: 	req.body.start_date ? new Date(req.body.start_date) : new Date(),
+		end_date: 		req.body.end_date ? new Date(req.body.end_date) : new Date(),
+		genre: 			req.body.genre ? req.body.split(',') : "",
+		contact: 		req.body.contact || ""
 		
-	}).save(function(err, item) {
+	};
+	
+	if(req.body._id)
+	{
+		return Item.findByIdAndUpdate(req.body._id, item_update, callbackHandler);
+	}
+	
+	item_update.report = [];
+	
+    new Item(item_update).save(callbackHandler);
+	
+	function callbackHandler(err, item) {
 		
 		if(err)
 		{
@@ -74,20 +112,15 @@ exports.create = function(req, res) {
 				{ 
 					title: 'posted your beta',
 					warning: 'Error occurred.',
-					errors: [err]
+					errors: [err],
+					a: item_update
 				} 
 			);
 			console.log(err);
 			return;
 		}
 		
-		res.render('item/create', 
-			{ 
-				title: 'posted your beta',
-				notify: 'Your beta was posted!!'
-			} 
-		);
+		res.redirect('/item/'+item._id+'?message=App+posted+successfully');
 		
-	});
-	
+	}
 };

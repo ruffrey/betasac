@@ -2,9 +2,17 @@
 <% for(var i=0, len=accounts.length; i<len; i++) { %>
 
 <div class="well">
+	<h4>
+	<a href="/account/<%=( accounts[i].username || accounts[i]._id) %>">
+		<%=(accounts[i].username || accounts[i].email || accounts[i]._id)%></a>
+	</h4>
 	<%=JSON.stringify(accounts[i])%>
+	
+	<% if(user && user.admin) { %>
 	<button onclick="ApiCall('/api/account/kill/<%=accounts[i]._id%>');$(this).parent().remove();"
 		class="btn btn-mini btn-warning"><i class='icon-remove icon-white'></i></button>
+		
+	<% } %>
 </div>
 
 <% } %>

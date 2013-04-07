@@ -1,7 +1,58 @@
-<%var a;a=a||{}%>
-
+<%
+	var a;a=a||{};
 	
+	var editMode = !!a._id;
+	
+	var testOther = typeof(a.test_type)!='undefined' && ['alpha','beta'].indexOf(a.test_type)==-1
+		? a.test_type : "";
+%>
+<script>
+function CheckTestType() {
+	if($('#test_type_other').is(':selected'))
+	{
+		$('#text_other').show();
+	}
+	else{
+		$('#text_other').hide().val('');
+	}
+}
+$(function(){
+	
+	$('select#test_type').change( CheckTestType );
+	CheckTestType();
+});
+</script>
+
 <form method="post" action="/item/create">
+	
+	<%
+		if( editMode )
+		{
+	%>
+			<h1>editing <%=a.title%></h1>
+			<input type="hidden" value="<%=a._id%>" name="_id" />
+	<%	}
+		else {
+	%>
+			<h1>new post</h1>
+	<%	
+		}
+	%>
+	
+	
+	<label>test type</label>
+	<select name="test_type" id="test_type">
+		
+		<option value="alpha"<%=(a.test_type=="alpha"?" selected":"")%>>
+			Alpha</option>
+			
+		<option value="beta"<%=(a.test_type=="beta"?" selected":"")%>>
+			Beta</option>
+		
+		<option value="" 
+		id="test_type_other" <%=(testOther?" selected":"")%>>Other</option>
+	</select>
+	<input type="text" name="test_type" id="text_other" value="<%=testOther%>" />
 	
 	<label>title</label>
 	<input type="text" name="title" value="<%=(a.title||"")%>" />
