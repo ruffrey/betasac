@@ -14,7 +14,7 @@ AccountSchema = mongoose.Schema({
 		givenName: String,
 		middleName: String
 	},
-	emails: [{type: String, value: String}]
+	email: String
 });
 
 

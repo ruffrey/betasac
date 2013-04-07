@@ -9,7 +9,7 @@ exports.GoogleStrategy = function(Account, config) {
 		},
 		function(identifier, profile, done) {
 			profile.openId = identifier;
-			console.log(profile);
+			profile.username = profile.email = profile.emails[0].value;
 			
 			Account.findOne({openId: identifier}, function(err, user) {
 				if(err) 

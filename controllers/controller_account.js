@@ -111,7 +111,7 @@ exports.create = function(req, res) {
 			givenName: req.body.givenName || '',
 			middleName: req.body.middleName || ''
 		},
-		emails: [{type: 'nome', value: req.body.email}],
+		email: req.body.email,
 		password: u.HASH(req.body.password)
 		
 	}).save(function(err, user){
