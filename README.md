@@ -1,4 +1,6 @@
-# Open source community website for developers to post their applications in beta.
+# betasac
+
+## Open source community website for developers to post beta testing notices
 
 Betasac exists to help you get the word out when your app is in alpha, beta or otherwise in need of testers.
 
@@ -16,11 +18,27 @@ Open source apps are welcomed and encouraged.
 
 Closed source software is allowed as well.
 
+## Developer notes
+
+### dev environment
+- Node.js 8.x
+- MongoDB, hosted or local
+- Redis, hosted or local
+
+Update config.js to suit your dev environment and please do not change your git settings to commit it.
+
+### Questions
+Contact jpx@wiggleware.com
+
+
+## Why is it called betasac?
+Because it originated in Sacramento, California.
 
 
 
+## Betasac website software license
 
-GNU GENERAL PUBLIC LICENSE
+## GNU GENERAL PUBLIC LICENSE
 ==========================
 
 Version 3, 29 June 2007
