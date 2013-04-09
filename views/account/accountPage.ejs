@@ -11,7 +11,7 @@
 	<h6>User account</h6>
 	
 	<h1><%= ( account.username || account._id ) %></h1>
-	<%=JSON.stringify(account)%>
+	
 	
 	<% if(user && user.admin && !account.admin) { %>
 	
@@ -28,5 +28,7 @@
 		unmake admin</button>
 		
 	<% } %>
+	
+	<div class="well"><%=JSON.stringify(account)%></div>
 	
 <% } %>

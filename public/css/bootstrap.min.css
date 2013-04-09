@@ -11,8 +11,8 @@
 /* SITE CSS*/
 .Ruffrey{
 	font-family: Courier New, monospace !important;
-	font-weight: bold;
-	font-size: 1.5em;
+	font-weight: 100;
+	font-size: 36px !important;
 }
 .smaller{
 	font-size: .9em !important;
@@ -42,4 +42,15 @@ div#PrimaryNav ul.nav li a:hover{
 	background: #f0f0f0;
 	text-transform: uppercase;
 	color: #707070;
+}
+.item_template:hover{
+	cursor:pointer;
+	background: #d9d9d9;
+}
+.tag{
+	padding: 4px;
+}
+.tag:hover{
+	text-decoration:none;
+	background: #f9f9f9;
 }

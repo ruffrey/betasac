@@ -1,6 +1,35 @@
 var SUCCESS = '<div class="alert alert-success notif"><button type="button" class="close" data-dismiss="alert">&times;</button>{{message}}</div>',
-	FAIL = '<div class="alert notif"><button type="button" class="close" data-dismiss="alert">&times;</button>{{message}}</div>';
 
+	FAIL = '<div class="alert notif"><button type="button" class="close" data-dismiss="alert">&times;</button>{{message}}</div>',
+	
+	page_nav_indicator = {
+		'item/create': 'post',
+		account: 'community',
+		item: 'apps',
+		index: 'apps',
+		login: 'log'
+	};
+
+function setPageNav() {
+	var path=location.pathname.substring(1).toLowerCase(),
+		$el;
+	!path && ($el = $('.nav li.nav_apps a'));
+	if(page_nav_indicator[path])
+	{
+		$el = $('.nav li.nav_'+page_nav_indicator[path]+' a');
+	}
+	else if(page_nav_indicator[path.split('/')[0]]){
+		$el = $('.nav li.nav_'+page_nav_indicator[path.split('/')[0]]+' a');
+	}
+	
+	if($el)
+	{
+		$el
+		.css('text-transform','uppercase')
+		.css('borderBottom','3px solid black');
+	}
+}
+// crappy mustache templater
 function crapstash(t, m) {
 	return t.replace(/\{\{message\}\}/g,m);
 }
@@ -61,11 +90,16 @@ function ApiCall(path) {
 	});
 }
 
-
 //
 // init
 //
 $(function(){
+	
+	setPageNav();
+	
+	$(document).on('click', '.item_template', function() {
+		window.open('/item/'+$(this).attr('data-id'),'_self');
+	});
 	
 	$(document).ajaxStart(function(){
 		$('div#ajaxLoader').show();

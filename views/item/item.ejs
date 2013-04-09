@@ -16,6 +16,7 @@ $(function(){
 });
 </script>
 
+
 	<%
 		switch(item.test_type) 
 		{
@@ -37,6 +38,8 @@ $(function(){
 		}
 	%>
 	
+	<h1 style="text-align:center;"><img src="<%=item.image%>" /></h1>
+	
 	<h1>
 		<%=item.title%>
 		&nbsp;&nbsp;
@@ -57,12 +60,20 @@ $(function(){
 		%>
 	</h1>
 	
+	
 	<h4><%=item.start_date.toFormat('DDD YYYY-MM-DD H:MI P')%> 
 		to <%=item.end_date.toFormat('DDD YYYY-MM-DD H:MI P')%></h4>
 
 	<p><%=item.description%></p>
 	
-	
+	<h4>
+	<%  for(var i=0; i<item.genre.length; i++) { %>
+		
+		<a href="/genre/<%=encodeURIComponent(item.genre[i])%>"><%=item.genre[i]%></a>
+		&nbsp;
+		
+	<% 	} %>
+	</h4>
 	<%=JSON.stringify(item)%>
 
 

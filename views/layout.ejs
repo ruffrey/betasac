@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
 <head>
-	<title>betasac | <%=title%></title>
+	<title>betasac <%=(title?"|"+title:"")%></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<meta name="keywords" content="beta community, beta testing, new apps" />
@@ -35,6 +35,7 @@
   <div class="navbar-inner">
     <div class="container">
 	 <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+		<span class="brand Ruffrey">Betasac</span>
 		<a class="btn btn-navbar" style="cursor:pointer"
 			data-toggle="collapse" data-target=".collapse">
 			&equiv;
@@ -42,19 +43,18 @@
 		<!-- Everything you want hidden at 940px or less, place within here -->
 		<div class="nav-collapse collapse">
 			<ul class="nav">
-			<li class="brand" class="nav-collapse"><span class="Ruffrey">Betasac</span></li>
 			<li class="brand smaller">
 				app testing community
 			</li>
-			<li>
+			<li class="nav_apps">
 				<a style="width:120px"
 					href="/">explore apps</a>
 			</li>
-			<li>
+			<li class="nav_community">
 				<a style="width:90px"
 					href="/account">community</a>
 			</li>
-			<li>
+			<li class="nav_post">
 				<a style="width:130px"
 					href="/item/create">post your app</a>
 			</li>
@@ -79,7 +79,7 @@
 			<% if(user) { %>
 				
 				
-				<% if( user && user.isAdmin ) { %>
+				<% if( user && user.admin ) { %>
 				
 				<li title="Application Settings">
 					<a href="/admin" style="color: #ff2828;">
@@ -90,8 +90,9 @@
 				</li>
 					
 				<% } %>
-				<li>
-					<a href="/logout" id="LogoutLink" style="width:100px"
+				<li class="nav_log">
+					<a href="/logout" id="LogoutLink"
+					 style="width:100px"
 					onmouseover="$(this).children('i').addClass('icon-circle-arrow-down').removeClass('icon-arrow-down');"
 					onmouseout="$(this).children('i').addClass('icon-arrow-down').removeClass('icon-circle-arrow-down');">
 						Log out&nbsp;
@@ -101,8 +102,9 @@
 				
 			<% } else { %>
 				
-				<li>
-					<a href="/login" id="LoginLink" style="width:100px"
+				<li class="nav_log">
+					<a href="/login" id="LoginLink"
+					style="width:100px"
 					onmouseover="$(this).children('i').addClass('icon-circle-arrow-right').removeClass('icon-arrow-right');"
 					onmouseout="$(this).children('i').addClass('icon-arrow-right').removeClass('icon-circle-arrow-right');">
 						Log in&nbsp;
@@ -161,10 +163,10 @@
   <div class="bar" style="width: 100px;">loading</div>
 </div>
 <hr style="border-bottom-color:#33B5E5" />
-<div class="well">
+
 <div class="row-fluid">
 
-	<div class="span6">
+	<div class="span8">
 		<% if(app_messages.length > 0) { %>
 			<h5>Messages</h5>
 			
@@ -177,16 +179,14 @@
 			<% } %>
 			
 		<% } %>
-		<%=JSON.stringify(session)%>
+		
 	</div>
-	<div class="span6">
-		<div class="pull-right">
-			&copy; 2013 <a href="http://www.wiggleware.com">Wiggleware</a>
-		</div>
+	<div class="span4">
+		&copy; 2013 <a href="http://www.wiggleware.com">Wiggleware</a>
 	</div>
 
 </div>
-</div>
+
 
 </body>
 </html>

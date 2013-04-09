@@ -1,13 +1,50 @@
 <%var items;items=items||[]%>
+
+<% if(!title) { %>
 <h1>Apps in Beta</h1>
+<% } else { %>
 
-<% for(var i=0; i<items.length; i++) { %>
+<h1><%=title%></h1>
 
-<div class="well">
-<h3>
-	<a href="/item/<%=items[i]._id%>"><%=items[i].title%></a>
-</h3>
-<%=JSON.stringify(items[i])%>
+<% } %>
+
+<br />
+
+<% 	var g=0, 
+		col1 = Math.floor(items.length/3)+1
+		col2 = col1*2 -1;
+%>
+
+<div class="row-fluid">
+<div class="span4">
+<%
+	for(var i=0; i<items.length; i++) 
+	{ 
+	
+		if(i==col1 || i==col2)
+		{
+%>
+		</div>
+		<div class="span4">
+<%
+		}
+%>
+
+<div class="well item_template" data-id="<%=items[i]._id%>">
+	<h3>
+		<img src="<%=items[i].image%>" class="pull-right"
+			style="max-width:80px;max-height:80px;" />
+		<a href="/item/<%=items[i]._id%>"><%=items[i].title%></a>
+		
+	</h3>
+	<%  for(g=0; g<items[i].genre.length; g++) { %>
+		
+		<a href="/genre/<%=encodeURIComponent(items[i].genre[g])%>"><%=items[i].genre[g]%></a>
+		&nbsp;
+		
+	<% 	} %>
 </div>
 
 <% } %>
+</div>
+</div>
