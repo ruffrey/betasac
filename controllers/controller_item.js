@@ -38,16 +38,25 @@ exports.getEdit = function(req, res) {
 			});
 		}
 		
-		// is this the same user who posted it
-		if(item.account_id != req.user._id.toString())
+		if(!req.user)
 		{
-			err = ['Editing not allowed - this is not yours'];
+			return res.redirect('/login?message=Please%20log%20in');
 		}
 		
-		res.render('item/item', {
+		// is this the same user who posted it
+		if(item && item.account_id != req.user._id.toString())
+		{
+			err = ['Editing not allowed - this is not yours'];
+			return res.render('item/item', {
+				title: item.title,
+				errors: err,
+				item: item
+			});
+		}
+		
+		res.render('item/create', {
 			title: item.title,
-			errors: err,
-			item: item
+			a: item
 		});
 	});
 	
