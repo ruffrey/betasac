@@ -67,7 +67,10 @@ exports.bind = function(app, passport) {
 	// format of the url
 	app.get('/item/:id',  controllers.item.get); 
 	
-	app.get('/genre/:genre', controllers.item.getByGenre);
+	app.get('/genre/:genre*', controllers.item.getByGenre);
+	
+	app.get('/byuserid/:userid', controllers.item.getByUserId);
+	app.get('/byuser/:user', controllers.item.getByUser);
 	
 	app.get('/api/item/kill/:id', controllers.item.api.kill);
 	

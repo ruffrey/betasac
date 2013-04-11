@@ -1,4 +1,5 @@
 var Account = require('../models/account.js'),
+	Item = require('../models/item.js'),
 	u = require('../lib/utilities');
 
 exports.get = function(req, res) {
@@ -55,6 +56,15 @@ exports.api = {
 				message: err || "Killed user"
 			});
 		});
+		
+		Item.remove({account_id: req.params.id}, function(err) {
+			if(err)
+			{
+				console.log('error trying to delete Items'.red,
+					req.params.id, err);
+			}
+		});
+		
 	},
 	
 	makeAdmin: function(req, res) {

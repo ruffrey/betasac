@@ -43,14 +43,33 @@ div#PrimaryNav ul.nav li a:hover{
 	text-transform: uppercase;
 	color: #707070;
 }
+.item_template{
+	background: transparent;
+}
+.item_template h4{
+	font-weight: 100;
+}
 .item_template:hover{
 	cursor:pointer;
-	background: #d9d9d9;
+	border: 1px solid #000;
+}
+.item_template img{
+	max-width:70px;
+	max-height:70px;
+}
+.item_template .span4{
+	vertical-align: text-top;
+	text-align: right;
 }
 .tag{
 	padding: 4px;
+	line-height: 125%;
+	border: 1px solid transparent;
+	color: #c0c0c0;
+	display: inline-block;
 }
 .tag:hover{
 	text-decoration:none;
-	background: #f9f9f9;
+	color: #c0c0c0;
+	border: 1px solid #000;
 }

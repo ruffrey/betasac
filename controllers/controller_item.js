@@ -1,5 +1,6 @@
 
-var Item = require('mongoose').model('Item');
+var Item = require('mongoose').model('Item'),
+	Account = require('mongoose').model('Account');
 
 exports.view = {
 	
@@ -63,10 +64,14 @@ exports.getEdit = function(req, res) {
 };
 
 exports.getByGenre = function(req, res) {
+	var genre = req.params.genre.toLowerCase().split(',');
+	
+	
+	
 	Item.find(
 		{
-			genre: req.params.genre.toLowerCase()
-		}, 
+			genre: {$in: genre}
+		},
 		function(err, items) {
 			res.render('index.ejs', {
 				title: 'genre: '+req.params.genre,
@@ -75,6 +80,61 @@ exports.getByGenre = function(req, res) {
 			});
 		}
 	);
+};
+
+exports.getByUserId = function(req, res) {
+	Item.find(
+		{
+			account_id: req.params.userid
+		}, 
+		function(err, items) {
+			res.render('index.ejs', {
+				title: 'user: '+req.params.userid,
+				items: items,
+				errors: err
+			});
+		}
+	);
+};
+exports.getByUser = function(req, res) {
+	
+	Account.findOne({username: req.params.user}, function(err, user) {
+		if(err)
+		{
+			return res.render('index.ejs', {
+				title: 'oopsie',
+				items: [],
+				errors: [err]
+			});
+		}
+		
+		if(!user)
+		{
+			return res.render('index.ejs', {
+				title: 'nobody has that username',
+				items: []
+			});
+		}
+		
+		getItems(user._id);
+		
+	});
+	
+	function getItems(_id) {
+		Item.find(
+			{
+				account_id: _id
+			}, 
+			function(err, items) {
+				res.render('index.ejs', {
+					title: 'user: '+req.params.user,
+					items: items,
+					errors: err
+				});
+			}
+		);
+	}
+	
 };
 
 exports.getList = function(req, res) {

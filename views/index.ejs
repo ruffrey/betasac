@@ -1,14 +1,20 @@
 <%var items;items=items||[]%>
 
-<% if(!title) { %>
-<h1>Apps in Beta</h1>
-<% } else { %>
+<% if(title) { %>
 
 <h1><%=title%></h1>
 
 <% } %>
 
 <br />
+
+<% if(items.length==0) { %>
+	
+	<h2>no apps!</h2>
+	
+<% } %>
+
+
 
 <% 	var g=0, 
 		col1 = Math.floor(items.length/3)+1
@@ -31,16 +37,20 @@
 %>
 
 <div class="well item_template" data-id="<%=items[i]._id%>">
-	<h3>
-		<img src="<%=items[i].image%>" class="pull-right"
-			style="max-width:80px;max-height:80px;" />
-		<a href="/item/<%=items[i]._id%>"><%=items[i].title%></a>
-		
-	</h3>
+	<div class="row-fluid">
+	<div class="span8">
+		<h4><%=items[i].title%></h4>
+	</div>
+	<div class="span4">
+		<img src="<%=items[i].image%>" class="pull-right"/>
+	</div>
+	</div>
+	<br />
+	
 	<%  for(g=0; g<items[i].genre.length; g++) { %>
 		
-		<a href="/genre/<%=encodeURIComponent(items[i].genre[g])%>"><%=items[i].genre[g]%></a>
-		&nbsp;
+		<a class="tag"
+			href="/genre/<%=encodeURIComponent(items[i].genre[g])%>"><%=items[i].genre[g]%></a>
 		
 	<% 	} %>
 </div>

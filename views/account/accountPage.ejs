@@ -18,7 +18,7 @@
 	<% if(user && user.admin && !account.admin) { %>
 	
 		<button onclick="ApiCall('/api/account/makeAdmin/<%=account._id%>');$(this).remove();"
-		class="btn btn-mini btn-success">
+		class="btn btn-mini btn-success pull-right">
 		make admin</button>
 		
 	
@@ -26,12 +26,14 @@
 	
 		
 		<button onclick="ApiCall('/api/account/unmakeAdmin/<%=account._id%>');$(this).remove();"
-		class="btn btn-mini btn-warning">
+		class="btn btn-mini btn-warning pull-right">
 		unmake admin</button>
 		
 	<% } %>
 	
 	<%=JSON.stringify(account)%>
+	
+	<a href="/byuserid/<%=account._id%>" class="btn"><%=account.username%>'s apps</a>
 	
 	<% if(user && user._id.toString() == account._id.toString()) { %>
 	<div class="well">
