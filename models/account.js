@@ -6,6 +6,8 @@ var mongoose = require('mongoose'),
 AccountSchema = mongoose.Schema({
 	provider: 	String,
 	username: 	String,
+	created: 	Date,
+	lastLogin:	Date,
 	password: 	String,
 	openId: 	String,
 	admin:		Boolean,

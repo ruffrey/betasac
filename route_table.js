@@ -39,6 +39,7 @@ exports.bind = function(app, passport) {
 	
 	app.get('/account/:id', controllers.account.get);
 	app.get('/account', 	controllers.account.getList);
+	app.post('/account/update', controllers.account.update);
 
 
 	app.get('/api/account/kill/:id', controllers.auth.isAdmin, 

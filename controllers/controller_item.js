@@ -44,7 +44,7 @@ exports.getEdit = function(req, res) {
 		}
 		
 		// is this the same user who posted it
-		if(item && item.account_id != req.user._id.toString())
+		if(item && req.user && item.account_id != req.user._id.toString())
 		{
 			err = ['Editing not allowed - this is not yours'];
 			return res.render('item/item', {

@@ -6,7 +6,9 @@
 	
 	<h2>:-/</h2>
 	
-<% } else { %>
+<% } else { 
+	account.name = account.name || {};
+%>
 	
 	<h6>User account</h6>
 	
@@ -29,6 +31,50 @@
 		
 	<% } %>
 	
-	<div class="well"><%=JSON.stringify(account)%></div>
+	<%=JSON.stringify(account)%>
 	
+	<% if(user && user._id.toString() == account._id.toString()) { %>
+	<div class="well">
+		<form method="post" action="/account/update">
+		<h3>update account info</h3>
+		
+		<input name="_id" type="hidden" value="<%=account._id%>" />
+		
+		<label>username</label>
+		<input name="username" type="text" value="<%=account.username%>" />
+		
+		
+		<label>email</label>
+		<input name="email" type="text" value="<%=account.email%>" />
+		
+		
+		<label>first name</label>
+		<input name="givenName" type="text" value="<%=account.name.givenName%>" />
+		
+		<label>middle name</label>
+		<input name="middleName" type="text" value="<%=account.name.middleName%>" />
+		
+		
+		<label>last name</label>
+		<input name="familyName" type="text" value="<%=account.name.familyName%>" />
+		
+		<% if(account.provider=='local') { %>
+		
+		<label>password</label>
+		<input name="password" type="text" value="<%=account.name.password%>" />
+		
+		<% } %>
+		
+		<br />
+		
+		<button type="submit" class="btn btn-primary">
+			submit changes
+			
+			<i class="icon-chevron-right icon-white"></i>
+			
+		</button>
+		
+		</form>
+	</div>
+	<%  } %>
 <% } %>

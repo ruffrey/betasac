@@ -136,6 +136,13 @@
 	<div class="alert alert-info"><%-query.message%></div>
 <%
 		}
+		
+		if(query.errorMessage)
+		{
+%>
+	<div class="alert alert-danger"><%-query.errorMessage%></div>
+<%
+		}
 %>
 <% } %>
 

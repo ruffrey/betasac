@@ -112,6 +112,8 @@ exports.create = function(req, res) {
 			middleName: req.body.middleName || ''
 		},
 		email: req.body.email,
+		lastLogin: new Date(),
+		created: new Date(),
 		password: u.HASH(req.body.password)
 		
 	}).save(function(err, user){
@@ -121,5 +123,71 @@ exports.create = function(req, res) {
 		});
 	});
 
+	
+};
+
+
+exports.update = function(req, res) {
+	
+	if(req.user && req.user._id != req.body._id)
+	{
+		return res.redirect('/account/'+req.body._id
+			+'?message=You%20cannot%20update%20someone%20else');
+	}
+	
+	if(req.body.password && req.body.password.length < 6)
+	{
+		return res.redirect('/account/'+req.body._id
+			+'?message=Password%20must%20be%206%20characters%20or%20longer');
+	}
+	
+	var acct_updates = {
+		username: req.body.username,
+		name: {
+			familyName: req.body.familyName || "",
+			givenName: req.body.givenName || "",
+			middleName: req.body.middleName || ""
+		},
+		email: req.body.email
+	};
+	
+	if(req.body.password)
+	{
+		acct_updates.password = u.HASH(req.body.password);
+	}
+	
+	Account.findOne({username: req.body.username}, function(err, usr) {
+		if(err)
+		{
+			return res.redirect('/account/'+req.body._id
+				+'?errorMessage='+encodeURIComponent(err));
+		}
+		
+		
+		if(usr && usr._id != req.body._id)
+		{
+			return res.redirect('/account/'+req.body._id
+				+'?errorMessage='+encodeURIComponent('Username already exists'));
+		}
+		
+		doUpdate();
+		
+	});
+	
+	function doUpdate() {
+		Account.findByIdAndUpdate(req.body._id, acct_updates,
+			function(err, user){
+				
+				if(err)
+				{
+					return res.redirect('/account/'+req.body._id
+					+'?errorMessage='+encodeURIComponent(err));
+				}
+				
+				res.redirect('/account/'+req.body._id
+					+'?message=Success');
+			});
+	}
+	
 	
 };
