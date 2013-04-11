@@ -70,7 +70,7 @@ exports.bind = function(app, passport) {
 	app.get('/genre/:genre*', controllers.item.getByGenre);
 	
 	app.get('/byuserid/:userid', controllers.item.getByUserId);
-	app.get('/byuser/:user', controllers.item.getByUser);
+	app.get('/apps/:user', controllers.item.getByUser);
 	
 	app.get('/api/item/kill/:id', controllers.item.api.kill);
 	
