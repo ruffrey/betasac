@@ -138,7 +138,10 @@ exports.getByUser = function(req, res) {
 };
 
 exports.getList = function(req, res) {
-	Item.find(function(err, items) {
+	Item.find({
+		end_date: {$gte: new Date()}
+	}, 
+	function(err, items) {
 		
 		res.render('index.ejs', {
 			title: '',
@@ -148,16 +151,63 @@ exports.getList = function(req, res) {
 	});
 };
 
+exports.getExpiredList = function(req, res) {
+	Item.find({
+		end_date: {$lt: new Date()}
+	},
+	function(err, items) {
+		
+		res.render('index.ejs', {
+			title: 'expired betas',
+			items: items,
+			errors: err
+		});
+	});
+};
+
 exports.api = {
 	
 	kill: function(req, res) {
-		Item.findByIdAndRemove(req.params.id, function(err) {
-			res.send({
-				errors: err ? [err] : [],
-				success: !err,
-				message: err || "Deleted beta app"
+		
+		if(!req.user)
+		{
+			return res.send({
+				success: false,
+				message: 'You must be logged in'
 			});
+		}
+		
+		Item.findById(req.params.id, function(err, item) {
+			if(err || !item)
+			{
+				return res.send({
+					success: false,
+					message: 'Unable to retrieve '+req.params.id,
+					errors: [err]
+				});
+			}
+			
+			if(item.account_id != req.user._id && !req.user.admin)
+			{
+				return res.send({
+					success: false,
+					message: 'You can only delete your own posts'
+				});
+			}
+			
+			killIt();
 		});
+		
+		function killIt() {
+			Item.findByIdAndRemove(req.params.id, function(err) {
+				res.send({
+					errors: err ? [err] : [],
+					success: !err,
+					message: err || "Deleted app post "+req.params.id
+				});
+			});
+		}
+		
 	}
 	
 };

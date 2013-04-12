@@ -52,6 +52,8 @@ exports.bind = function(app, passport) {
 
 	app.get('/', controllers.item.getList);
 	app.get('/index', controllers.item.getList);
+	
+	app.get('/expired', controllers.item.getExpiredList);
 
 	
 	app.get('/item/create',  controllers.auth.isAuthorized, 

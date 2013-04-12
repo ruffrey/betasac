@@ -16,12 +16,30 @@ function CheckTestType() {
 		$('#text_other').hide().val('');
 	}
 }
+
+function RemoveItemPost(item_id) {
+	ApiCall('/api/item/kill/'+item_id, function(){
+		window.open('/byuserid/<%=user._id%>?message=Successfully%20deleted','_self');
+	});
+}
+
 $(function(){
 	
 	$('select#test_type').change( CheckTestType );
 	CheckTestType();
 });
 </script>
+
+
+<% if(editMode) { %>
+	
+	<button onclick="var c=confirm('Really delete?');c&&RemoveItemPost('<%=a._id%>');" 
+		class="btn btn-danger pull-right">
+		DELETE THIS APP
+	</button>
+	
+<% } %>
+<br />
 
 <form method="post" action="/item/create">
 	
@@ -85,4 +103,5 @@ $(function(){
 		post
 	</button>
 </form>
+
 
