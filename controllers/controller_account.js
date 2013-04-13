@@ -18,7 +18,7 @@ exports.get = function(req, res) {
 			{
 				var acct = account instanceof Array ? account[0] : account;
 				
-				if(!req.user || acct._id != req.user._id)
+				if(!req.user || acct._id != req.user._id.toString())
 				{
 					acct.email=null;
 					acct.password=null;

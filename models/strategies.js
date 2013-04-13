@@ -1,5 +1,13 @@
 var GoogleStrategy = require('passport-google').Strategy
-  , LocalStrategy = require('passport-local').Strategy;
+  , LocalStrategy = require('passport-local').Strategy
+  , crypto = require('crypto');
+
+function MakeUsername(string1, string2) {
+	return crypto
+		.createHmac('sha256', string1 )
+		.update(string2)
+		.digest('base64');
+}
 
 exports.GoogleStrategy = function(Account, config) {
 	
@@ -9,7 +17,9 @@ exports.GoogleStrategy = function(Account, config) {
 		},
 		function(identifier, profile, done) {
 			profile.openId = identifier;
-			profile.username = profile.email = profile.emails[0].value;
+			profile.email = profile.emails[0].value;
+			profile.username = 'user' + MakeUsername(profile.email, identifier );
+			console.log(profile.username);
 			profile.lastLogin = new Date();
 			
 			Account.findOne({openId: identifier}, function(err, user) {
