@@ -31,9 +31,14 @@
 		
 	<% } %>
 	
-	<%=JSON.stringify(account)%>
-	
-	<a href="/byuserid/<%=account._id%>" class="btn"><%=account.username%>'s apps</a>
+	<h5><%=account._id%></h5>
+	<h4>
+		<%=(account.name.familyName||"")%>
+		<%=(account.name.middleName||"")%>
+		<%=(account.name.givenName||"")%>
+	</h4>
+	<h5>last seen <%=account.lastLogin%></h5>
+	<a href="/byuserid/<%=account._id%>" class="btn btn-success"><%=account.username%>'s apps</a>
 	
 	<% if(user && user._id.toString() == account._id.toString()) { %>
 	<div class="well">
@@ -63,7 +68,9 @@
 		<% if(account.provider=='local') { %>
 		
 		<label>password</label>
-		<input name="password" type="text" value="<%=account.name.password%>" />
+		<span class="help-block">leave blank or it will be changed</span>
+		<input name="password" placeholder="password" type="password" value="" /><br />
+		<input name="confirmPassword" placeholder="confirm" type="password" value="" />
 		
 		<% } %>
 		

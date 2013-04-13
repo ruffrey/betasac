@@ -69,12 +69,21 @@ exports.bind = function(app, passport) {
 	// format of the url
 	app.get('/item/:id',  controllers.item.get); 
 	
-	app.get('/genre/:genre*', controllers.item.getByGenre);
+	
+	app.get('/redir/:url/:itemid', function(req, res){
+		res.render('item/redir', {
+			url: req.params.url,
+			title: 'redir:'+req.params.itemid
+		});
+	});
+	
+	app.get('/genre/:genre', controllers.item.getByGenre);
 	
 	app.get('/byuserid/:userid', controllers.item.getByUserId);
 	app.get('/apps/:user', controllers.item.getByUser);
 	
 	app.get('/api/item/kill/:id', controllers.item.api.kill);
+	app.post('/api/item/report/:id',  controllers.item.api.report); 
 	
 	app.get('/authError', controllers.auth.authError);
 

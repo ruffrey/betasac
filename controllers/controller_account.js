@@ -16,14 +16,29 @@ exports.get = function(req, res) {
 			
 			if(err || (account && account.length>0) )
 			{
+				var acct = account instanceof Array ? account[0] : account;
+				
+				if(!req.user || acct._id != req.user._id)
+				{
+					acct.email=null;
+					acct.password=null;
+					acct.openId=null;
+				}
 				return res.render('account/accountPage.ejs', {
-					title: account.username || req.params.id,
-					account: account instanceof Array ? account[0] : account,
+					title: acct.username || req.params.id,
+					account: acct,
 					errors: err
 				});
 			}
 			else{  // or search by _id
 				Account.findById(req.params.id, function(err, account2) {
+					if(account)
+					{
+						delete account.password;
+						delete account.openId;
+						delete account.email;
+					}
+					
 					return res.render('account/accountPage.ejs', {
 						title: req.params.id,
 						account: account2,
@@ -36,7 +51,8 @@ exports.get = function(req, res) {
 };
 
 exports.getList = function(req, res) {
-	Account.find(function(err, accounts) {
+	Account.find({}, 'username _id', {sort: {lastLogin: -1} },
+	function(err, accounts) {
 		
 		return res.render('account/accountList.ejs', {
 			title: req.params.id,
@@ -110,6 +126,14 @@ exports.create = function(req, res) {
 		});
 	}
 	
+	if(!req.body.username || req.body.username.match(/[^a-z0-9\.\-\+\@]/gi) != null)
+	{
+		return res.render('login', {
+			title: 'try again',
+			errors: ['Invalid username'],
+			A: req.body
+		});
+	}
 	
 	
 	new Account({
@@ -142,13 +166,25 @@ exports.update = function(req, res) {
 	if(req.user && req.user._id != req.body._id)
 	{
 		return res.redirect('/account/'+req.body._id
-			+'?message=You%20cannot%20update%20someone%20else');
+			+'?errorMessage=You%20cannot%20update%20someone%20else');
 	}
 	
 	if(req.body.password && req.body.password.length < 6)
 	{
 		return res.redirect('/account/'+req.body._id
-			+'?message=Password%20must%20be%206%20characters%20or%20longer');
+			+'?errorMessage=Password%20must%20be%206%20characters%20or%20longer');
+	}
+	
+	if(req.body.password && req.body.password != req.body.confirmPassword)
+	{
+		return res.redirect('/account/'+req.body._id
+			+'?errorMessage=Passwords%20do%20not%20match');
+	}
+	
+	if(!req.body.username || req.body.username.match(/[^a-z0-9\.\-\+\@]/gi) != null)
+	{
+		return res.redirect('/account/'+req.body._id
+			+'?errorMessage=Invalid%20username');
 	}
 	
 	var acct_updates = {

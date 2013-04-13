@@ -1,18 +1,67 @@
 
-<% for(var i=0, len=accounts.length; i<len; i++) { %>
+<% 	
+	var accounts;accounts=accounts||[];
+	var col1 = Math.floor(accounts.length/3)
+		col2 = col1*2;
+%>
 
-<div class="well">
-	<h4>
-	<a href="/account/<%=( accounts[i].username || accounts[i]._id) %>">
-		<%=(accounts[i].username || accounts[i].email || accounts[i]._id)%></a>
-	</h4>
-	<%=JSON.stringify(accounts[i])%>
+
+<script>
+function SearchDivs() {
+	var val = $('input#searchUsers').val().toLowerCase();
+	var show = [];
+	var hide = [];
+	$('div#account_list div.well').each(function(k,v) {
+		if($(this).find('h4').text().toLowerCase().indexOf(val)!=-1)
+		{
+			show.push(this);
+		}
+		else{
+			hide.push(this);
+		}
+	});
 	
-	<% if(user && user.admin) { %>
-	<button onclick="ApiCall('/api/account/kill/<%=accounts[i]._id%>');$(this).parent().remove();"
-		class="btn btn-mini btn-warning"><i class='icon-remove icon-white'></i></button>
-		
-	<% } %>
+	$(show).show();
+	$(hide).hide();
+}
+$(function(){
+	$('input#searchUsers').keyup(SearchDivs).focus();
+});
+</script>
+<input id="searchUsers" type="text" class="input-medium" />
+<br />
+<div class="row-fluid" id="account_list">
+	<div class="span4">
+
+<% for(var i=0, len=accounts.length; i<len; i++) {
+		if(i==col1 || i==col2)
+		{
+%>
+	</div>
+	<div class="span4">
+<%
+		}
+%>
+
+
+		<div class="well">
+			
+			<% if(user && user.admin) { %>
+			<button onclick="ApiCall('/api/account/kill/<%=accounts[i]._id%>');$(this).parent().remove();"
+				class="btn btn-mini btn-warning"><i class='icon-remove icon-white'></i></button>
+				
+			<% } %>
+			
+			<h4 style="text-align:center;">
+			<a href="/account/<%=( accounts[i].username || accounts[i]._id) %>">
+				<%=(accounts[i].username || accounts[i].email || accounts[i]._id)%></a>
+			</h4>
+			
+			
+		</div>
+
+	
+<% } %>
+	</div>
 </div>
 
-<% } %>

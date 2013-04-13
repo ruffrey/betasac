@@ -1,4 +1,4 @@
-<%var items;items=items||[]%>
+<%var items;items=items||[];now=+new Date();%>
 
 <% if(title) { %>
 
@@ -17,21 +17,21 @@
 
 
 <% 	var g=0, 
-		col1 = Math.floor(items.length/3)+1
-		col2 = col1*2 ;
+		col1 = Math.floor(items.length/3)
+		col2 = col1*2 +1;
 %>
 
 <div class="row-fluid">
 <div class="span4">
 <form class="form-search" method="get" action=""
-	onsubmit="$(this).attr('action','/genre/'+$('#genre-query').val());">
+	onsubmit="if($('#genre-query').val().length>0){$(this).attr('action','/genre/'+$('#genre-query').val());}else{return false;}">
   <input type="text" id="genre-query" placeholder="genres"
 	class="input-medium search-query">
   <button type="submit" class="btn">go</button>
 </form>
 <form class="form-search" method="get" action=""
-	onsubmit="$(this).attr('action','/apps/'+$('#user-query').val());">
-  <input type="text" id="user-query" placeholder="user name"
+	onsubmit="if($('#user-query').val().length>0){(this).attr('action','/apps/'+$('#user-query').val());}else{return false;}">
+  <input type="text" id="user-query" placeholder="developer"
 	class="input-medium search-query">
   <button type="submit" class="btn">go</button>
 </form>
@@ -48,7 +48,9 @@
 		}
 %>
 
-<div class="well item_template" data-id="<%=items[i]._id%>">
+<div class="well item_template<%=( 
+	+new Date(items[i].end_date)<now ? " expired" : ""
+	)%>" data-id="<%=items[i]._id%>">
 	<div class="row-fluid">
 	<div class="span8">
 		<h4><%=items[i].title%></h4>

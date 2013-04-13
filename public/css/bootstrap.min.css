@@ -61,6 +61,14 @@ div#PrimaryNav ul.nav li a:hover{
 	vertical-align: text-top;
 	text-align: right;
 }
+.expired{
+	background: #FFE1E1;
+	border: 1px solid #FF9191;
+}
+.expired:hover{
+	border: 1px solid #FF0000;
+}
+
 .tag{
 	padding: 4px;
 	line-height: 125%;

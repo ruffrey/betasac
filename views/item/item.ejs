@@ -6,16 +6,39 @@
 
 
 <script>
+function report(v) {
+	$.ajax({
+		type: 'post',
+		url: '/api/item/report/<%=item._id%>',
+		success: ApiSuccess,
+		dataType: 'json',
+		data: {
+			text: v
+		}
+	});
+}
+
 $(function(){
+
 	ApiCall('/account/<%=item.account_id%>?/json/', function(data) {
 		if(data.account) 
 		{
 			$('#acct_<%=item.account_id%>').append(data.account.username);
 		}
 	});
+	
+	$('#reportit').click(function(){
+		report($('#txt').val());
+		$(this).parent().remove();
+		$('#btnrep').remove();
+	});
 });
 </script>
 
+<% if( +new Date() > +new Date(item.end_date) ) { %>
+	<div class="alert alert-warning">This test ended 
+		<%=item.end_date%></div>
+<% } %>
 
 	<%
 		switch(item.test_type) 
@@ -62,20 +85,52 @@ $(function(){
 	
 	
 	<h4><%=item.start_date.toFormat('DDD YYYY-MM-DD H:MI P')%> 
-		to <%=item.end_date.toFormat('DDD YYYY-MM-DD H:MI P')%></h4>
+		<br /><%=item.end_date.toFormat('DDD YYYY-MM-DD H:MI P')%></h4>
 
-	<p><%=item.description%></p>
+	<div class="well">
+		<h5>info</h5><%=item.description%></div>
 	
+	<div class="row-fluid">
+	<div class="span6"><div class="well">
+		<h5>contact</h5>
+		<% if(item.contact && item.contact.indexOf('@')>-1) { %>
+			<a href="mailto:<%=encodeURIComponent(item.contact)%>">
+			<%=item.contact%>
+			</a>
+			
+		<% } else if (item.contact) { %>
+		
+			<%=item.contact%>
+			
+		<% } else { %>
+			none
+		<% } %>
+	</div></div>
+	<div class="span6"><div class="well">
+		<h5>website</h5>
+		<a target="_blank" href="/redir/<%=encodeURIComponent(item.website)%>/<%=item._id%>">
+		<%=item.website%></a>
+	</div></div>
+	</div>
+
+	<div class="well">
+	<h5>genre</h5>
 	<h4>
 	<%  for(var i=0; i<item.genre.length; i++) { %>
 		
-		<a href="/genre/<%=encodeURIComponent(item.genre[i])%>"><%=item.genre[i]%></a>
+		<a href="/genre/<%=encodeURIComponent(item.genre[i])%>">
+			<%=item.genre[i]%></a>
 		&nbsp;
 		
 	<% 	} %>
 	</h4>
-	<%=JSON.stringify(item)%>
-
-
+	</div>
+	
+	<button class="btn" id="btnrep" onclick="$(this).next().toggle();">report</button>
+	<div class="hide">
+	
+		<textarea id="txt"></textarea>
+		<button class="btn btn-warning" id="reportit">submit</button>
+	</div>
 <% } %>
 

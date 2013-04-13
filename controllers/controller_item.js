@@ -64,17 +64,16 @@ exports.getEdit = function(req, res) {
 };
 
 exports.getByGenre = function(req, res) {
-	var genre = req.params.genre.toLowerCase().split(',');
-	
-	
-	
-	Item.find(
-		{
-			genre: {$in: genre}
-		},
+	var genre = req.params.genre.toLowerCase().split(' ');
+		
+	Item.find({
+		genre: { $in: genre },
+		end_date: { $gte: new Date() }
+	},
 		function(err, items) {
 			res.render('index.ejs', {
-				title: 'genre: '+req.params.genre,
+				title: (genre.length>1 ? 'genres: ' : 'genre: ') 
+					+ req.params.genre,
 				items: items,
 				errors: err
 			});
@@ -201,13 +200,75 @@ exports.api = {
 		function killIt() {
 			Item.findByIdAndRemove(req.params.id, function(err) {
 				res.send({
-					errors: err ? [err] : [],
+					errors: err ? [err] : null,
 					success: !err,
 					message: err || "Deleted app post "+req.params.id
 				});
 			});
 		}
 		
+	},
+	report: function(req, res){
+		if(!req.user)
+		{
+			return res.send({
+				success: false,
+				message: 'You must be logged in'
+			});
+		}
+		
+		if(!req.body.text)
+		{
+			return res.send({
+				success: false,
+				message: 'You need to say something'
+			});
+		}
+		
+		Item.findById(req.params.id, function(err, item) {
+			if(err || !item)
+			{
+				return res.send({
+					success: false,
+					message: 'Unable to retrieve '+req.params.id,
+					errors: [err]
+				});
+			}
+			
+			var already_reported = false;
+			for(var i=0; i<item.reports.length; i++)
+			{
+				if(item.reports[i].account_id==req.user._id.toString())
+				{
+					already_reported = true;
+					break;
+				}
+			}
+			
+			if(already_reported)
+			{
+				return res.send({
+					success: false,
+					message: 'You already reported this one'
+				});
+			}
+			
+			Item.findByIdAndUpdate(req.params.id, {
+				$push: {
+					reports: {
+						account_id: req.user._id,
+						text: req.body.text
+					}
+				}
+			}, function(err, itm) {
+				res.send({
+					errors: err ? [err] : null,
+					success: !err,
+					message: err || "Reported this app."
+				});
+			});
+			
+		});
 	}
 	
 };
