@@ -186,7 +186,7 @@ exports.api = {
 				});
 			}
 			
-			if(item.account_id != req.user._id && !req.user.admin)
+			if(item.account_id != req.user._id.toString() && !req.user.admin)
 			{
 				return res.send({
 					success: false,

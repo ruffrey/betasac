@@ -6,7 +6,9 @@ function MakeUsername(string1, string2) {
 	return crypto
 		.createHmac('sha256', string1 )
 		.update(string2)
-		.digest('base64');
+		.digest('base64')
+		.replace(/[^a-b0-9]/gi,'')
+		.substring(0,10);
 }
 
 exports.GoogleStrategy = function(Account, config) {
