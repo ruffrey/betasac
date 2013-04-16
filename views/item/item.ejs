@@ -5,19 +5,8 @@
 <% } else { %>
 
 
+<script src="/js/item.js"></script>
 <script>
-function report(v) {
-	$.ajax({
-		type: 'post',
-		url: '/api/item/report/<%=item._id%>',
-		success: ApiSuccess,
-		dataType: 'json',
-		data: {
-			text: v
-		}
-	});
-}
-
 $(function(){
 
 	ApiCall('/account/<%=item.account_id%>?/json/', function(data) {
@@ -28,13 +17,45 @@ $(function(){
 	});
 	
 	$('#reportit').click(function(){
-		report($('#txt').val());
+		report($('#txt').val(), '<%=item._id%>');
 		$(this).parent().remove();
 		$('#btnrep').remove();
 	});
+	
+	$('#item_comments_list h4').click(function(){
+		$(this).text('Loading comments');
+		
+		loadcomments('<%=item._id%>', $('#item_comments_list') );
+	});
+	
+	$('button#btnComment').click(function(){
+	
+		if($('#comment_text').val().length < 5)
+		{
+			return ApiFail({},{},'Write something first');
+		}
+		else{
+			$('#comment_text, button#btnComment').hide();
+		}
+		
+		$.ajax({
+			url: '/comment/<%=item._id%>',
+			type: 'post',
+			dataType: 'json',
+			error: ApiFail,
+			success: ApiSuccessWrap(function(data){
+				$('#item_comments_list').prepend( crapstash2(COMMENT, data.comment) );
+			}),
+			data: {
+				text: $('#comment_text').val()
+			}
+		});
+		
+		$('#comment_text').val('');
+	});
+	
 });
 </script>
-
 <% if( +new Date() > +new Date(item.end_date) ) { %>
 	<div class="alert alert-warning">This test ended 
 		<%=item.end_date%></div>
@@ -125,8 +146,28 @@ $(function(){
 	<% 	} %>
 	</h4>
 	</div>
+
+
+
 	
-	<button class="btn" id="btnrep" onclick="$(this).next().toggle();">report</button>
+<div class="row-fluid">
+
+<div class="span7">
+	<textarea id="comment_text"></textarea>
+	<br />
+	<button class="btn btn-primary" id="btnComment">comment 
+		<i class="icon-chevron-right icon-white"></i></button>
+	<br />
+	<br />
+	<div id="item_comments_list">
+		<h4><a href="javascript:void(0);">Load comments</a></h4>
+	</div>
+	
+</div>
+
+<div class="span5">
+	
+	<button class="btn btn-warning" id="btnrep" onclick="$(this).next().toggle();">report</button>
 	<div class="hide">
 	
 		<textarea id="txt"></textarea>
@@ -134,3 +175,42 @@ $(function(){
 	</div>
 <% } %>
 
+
+
+<%
+	if(	item.reports instanceof Array
+		&& item.reports.length>0
+	)
+	{
+	
+%>
+	<br />
+	<br />
+		<div class="alert">
+		<h4>Reports</h4>
+		<table cellpadding="4px">
+<%
+		for(var r=0; r<item.reports.length; r++)
+		{
+%>
+		<tr>
+			<td><%=(item.reports[r].date
+				? new Date(item.reports[r].date).toFormat('YYYY-MM-DD H24:MI:SS')
+				: ""
+			)%></td>
+			<td><%=item.reports[r].text%><br /></td>
+		</tr>
+<%	
+		}
+%>
+
+		</table>
+		</div>
+
+<%	}
+%>
+
+
+</div>
+
+</div>

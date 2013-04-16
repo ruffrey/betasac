@@ -257,14 +257,15 @@ exports.api = {
 				$push: {
 					reports: {
 						account_id: req.user._id,
-						text: req.body.text
+						text: req.body.text,
+						date: new Date()
 					}
 				}
 			}, function(err, itm) {
 				res.send({
 					errors: err ? [err] : null,
 					success: !err,
-					message: err || "Reported this app."
+					message: err || "Thanks for reporting"
 				});
 			});
 			

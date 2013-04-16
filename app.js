@@ -18,6 +18,8 @@ var express = require('express')
   
   , Account = require('./models/account.js')
   , Item = require('./models/item.js')
+  , Comment = require('./models/comment.js')
+  
   , passport = require('passport')
   , strategies = require('./models/strategies.js')
   

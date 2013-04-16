@@ -1,7 +1,7 @@
 
 <% 	
 	var accounts;accounts=accounts||[];
-	var col1 = Math.floor(accounts.length/3)
+	var col1 = Math.floor(accounts.length/3)+1
 		col2 = col1*2;
 %>
 
@@ -12,7 +12,7 @@ function SearchDivs() {
 	var show = [];
 	var hide = [];
 	$('div#account_list div.well').each(function(k,v) {
-		if($(this).find('h4').text().toLowerCase().indexOf(val)!=-1)
+		if($(this).attr('data-txt').indexOf(val)!=-1)
 		{
 			show.push(this);
 		}
@@ -44,7 +44,9 @@ $(function(){
 %>
 
 
-		<div class="well">
+		<div class="well user_template" 
+			data-txt="<%=(accounts[i].username).toString().toLowerCase()%>"
+			data-id="<%=accounts[i]._id%>">
 			
 			<% if(user && user.admin) { %>
 			<button onclick="ApiCall('/api/account/kill/<%=accounts[i]._id%>');$(this).parent().remove();"
@@ -54,7 +56,7 @@ $(function(){
 			
 			<h4 style="text-align:center;">
 			<a href="/account/<%=( accounts[i].username || accounts[i]._id) %>">
-				<%=(accounts[i].username || accounts[i].email || accounts[i]._id)%></a>
+				<%=(accounts[i].username || accounts[i]._id)%></a>
 			</h4>
 			
 			

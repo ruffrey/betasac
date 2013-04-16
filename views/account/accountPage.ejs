@@ -33,9 +33,9 @@
 	
 	<h5><%=account._id%></h5>
 	<h4>
+		<%=(account.name.givenName||"")%>
 		<%=(account.name.familyName||"")%>
 		<%=(account.name.middleName||"")%>
-		<%=(account.name.givenName||"")%>
 	</h4>
 	<h5>last seen <%=account.lastLogin%></h5>
 	<a href="/byuserid/<%=account._id%>" class="btn btn-success"><%=account.username%>'s apps</a>
@@ -56,14 +56,14 @@
 		
 		
 		<label>first name</label>
-		<input name="givenName" type="text" value="<%=account.name.givenName%>" />
+		<input name="givenName" type="text" value="<%=(account.name.givenName||"")%>" />
 		
 		<label>middle name</label>
-		<input name="middleName" type="text" value="<%=account.name.middleName%>" />
+		<input name="middleName" type="text" value="<%=(account.name.middleName||"")%>" />
 		
 		
 		<label>last name</label>
-		<input name="familyName" type="text" value="<%=account.name.familyName%>" />
+		<input name="familyName" type="text" value="<%=(account.name.familyName||"")%>" />
 		
 		<% if(account.provider=='local') { %>
 		

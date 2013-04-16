@@ -70,6 +70,9 @@ exports.bind = function(app, passport) {
 	app.get('/item/:id',  controllers.item.get); 
 	
 	
+	app.get('/comment/:itemid',  controllers.comment.api.getByItem); 
+	app.post('/comment/:itemid', controllers.comment.api.create);
+	
 	app.get('/redir/:url/:itemid', function(req, res){
 		res.render('item/redir', {
 			url: req.params.url,

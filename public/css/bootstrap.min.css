@@ -46,10 +46,12 @@ div#PrimaryNav ul.nav li a:hover{
 .item_template{
 	background: transparent;
 }
+.user_template h4,
 .item_template h4{
 	font-weight: 100;
 }
-.item_template:hover{
+.item_template:hover,
+.user_template:hover{
 	cursor:pointer;
 	border: 1px solid #000;
 }
@@ -80,4 +82,16 @@ div#PrimaryNav ul.nav li a:hover{
 	text-decoration:none;
 	color: #c0c0c0;
 	border: 1px solid #000;
+}
+
+.comment{
+	padding: 3px;
+	cursor:pointer;
+}
+.comment .comment_date{
+	color: #bbb;
+	margin-right: 4px;
+}
+.comment .comment_text{
+	color: #000;
 }
