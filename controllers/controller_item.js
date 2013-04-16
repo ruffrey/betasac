@@ -328,7 +328,7 @@ exports.create = function(req, res) {
 				);
 			}
 			
-			if(item.account_id!=req.user)
+			if(item.account_id.toString()!=req.user._id.toString())
 			{
 				return res.render('item/create', 
 					{ 
