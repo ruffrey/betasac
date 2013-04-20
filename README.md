@@ -1,11 +1,17 @@
 # betasac
+#### *A community board for people seeking new apps in beta*
+
+<br />
+
 
 ## Open source community website for developers to post beta testing notices
 
-Betasac exists to help you get the word out when your app is in alpha, beta or otherwise in need of testers.
+Betasac tries to help developers get the word out when their apps are in alpha, beta or otherwise in need of testers.
 
-## Shortened terms
-There are no restrictions on software posted other than:
+<br />
+
+## End user terms and acceptable use
+
 - the poster acknowledges agreement to all terms, including that they can change without notice
 - you have legitimate rights to post that the app is in testing (it's not a leak)
 - the software *is* in testing when you state it is
@@ -18,6 +24,8 @@ Open source apps are welcomed and encouraged.
 
 Closed source software is allowed as well.
 
+<br />
+
 ## Developer notes
 
 ### dev environment
@@ -27,19 +35,26 @@ Closed source software is allowed as well.
 
 Update config.js to suit your dev environment and please do not change your git settings to commit it.
 
-### Questions
+### dev questions
 Contact jpx@wiggleware.com
 
 
-## Why is it called betasac?
+<br />
+
+## FAQ
+
+#### Why is it called betasac?
 Because it originated in Sacramento, California.
 
+#### Why is betasac necessary?
+The internet needed classified ads for developers and beta testers to meet.
 
 
-## Betasac website software license
+<br />
+<br />
 
 ## GNU GENERAL PUBLIC LICENSE
-==========================
+
 
 Version 3, 29 June 2007
 

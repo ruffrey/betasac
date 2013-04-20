@@ -9,6 +9,8 @@
     "express": "3.1.0",
     "ejs": "0.8.x",
     "less-middleware": "*",
+    "node-markdown": "*",
+    "sanitizer": "*",
     "passport": "*",
     "passport-local": "0.1.x",
     "passport-facebook": "0.1.x",

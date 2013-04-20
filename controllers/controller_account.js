@@ -1,6 +1,7 @@
 var Account = require('../models/account.js'),
 	Item = require('../models/item.js'),
-	u = require('../lib/utilities');
+	u = require('../lib/utilities'),
+	sanitize = require('sanitizer').sanitize;
 
 exports.get = function(req, res) {
 	var query = Account.find();
@@ -146,6 +147,8 @@ exports.create = function(req, res) {
 			middleName: req.body.middleName || ''
 		},
 		email: req.body.email,
+		description: sanitize( req.body.description || "" )
+			.replace(/\n/g,'<br />'),
 		lastLogin: new Date(),
 		created: new Date(),
 		password: u.HASH(req.body.password)
@@ -153,7 +156,7 @@ exports.create = function(req, res) {
 	}).save(function(err, user){
 		req.login(user, function(err) {
 			if (err) { return next(err); }
-			return res.redirect('/?message=Welcome+to+betasac.');
+			return res.redirect('/?message=Welcome!');
 		});
 	});
 
@@ -194,7 +197,8 @@ exports.update = function(req, res) {
 			givenName: req.body.givenName || "",
 			middleName: req.body.middleName || ""
 		},
-		email: req.body.email
+		email: req.body.email,
+		description: sanitize( req.body.description || "" )
 	};
 	
 	if(req.body.password)

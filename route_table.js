@@ -89,6 +89,10 @@ exports.bind = function(app, passport) {
 	app.get('/api/item/kill/:id', controllers.item.api.kill);
 	app.post('/api/item/report/:id',  controllers.item.api.report); 
 	
+	
+	app.get('/admin', controllers.auth.isAdmin, controllers.admin_page);
+	app.get('/terms', controllers.terms);
+	
 	app.get('/authError', controllers.auth.authError);
 
 	app.all('*', controllers['404']);

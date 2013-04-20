@@ -87,3 +87,6 @@ div#PrimaryNav ul.nav li a:hover{
 .comment .comment_text{
 	color: #000;
 }
+.skinny{
+	font-weight: 100;
+}

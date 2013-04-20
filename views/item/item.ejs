@@ -85,7 +85,7 @@ $(function(){
 			
 			default:
 	%>
-			<span class="label label-inverse pull-right"><%=item.test_type%> Test</span>
+			<span class="label label-inverse pull-right"><%=item.test_type%></span>
 	<%
 			
 		}
@@ -102,8 +102,14 @@ $(function(){
 		&nbsp;</a>
 		
 		<%
-			if(item.account_id && user && user._id
-				&& item.account_id.toString() == user._id.toString())
+			if(item.account_id 
+				&& user && user._id
+				&& 
+					(
+						item.account_id.toString() == user._id.toString()
+						|| user.admin
+					)
+			)
 			{
 		%>
 			<a class="btn" href="/item/edit/<%=item._id%>">
@@ -118,7 +124,7 @@ $(function(){
 		<br /><%=item.end_date.toFormat('DDD YYYY-MM-DD H:MI P')%></h4>
 
 	<div class="well">
-		<h5>info</h5><%-item.description.replace(/\n/g,'<br />')%></div>
+		<h5>info</h5><%-sanitize(item.description||"")%></div>
 	
 	<div class="row-fluid">
 	<div class="span6"><div class="well">
@@ -128,10 +134,14 @@ $(function(){
 			<%=item.contact%>
 			</a>
 			
-		<% } else if (item.contact) { %>
+		<% } else if (item.contact && item.contact.indexOf('http')>-1) { %>
+		
+			<a href="<%=item.contact%>"><%=item.contact%></a>
+			
+		<% } else if(item.contact) { %>
 		
 			<%=item.contact%>
-			
+		
 		<% } else { %>
 			none
 		<% } %>

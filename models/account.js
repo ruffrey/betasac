@@ -16,7 +16,8 @@ AccountSchema = mongoose.Schema({
 		givenName: String,
 		middleName: String
 	},
-	email: String
+	email: String,
+	description: String
 });
 
 

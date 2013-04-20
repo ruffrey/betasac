@@ -1,4 +1,27 @@
+var fs = require('fs'),
+	md = require("node-markdown").Markdown;
 
+exports.terms = function(req, res) {
+	fs.readFile('./README.md', 'utf8', function(err, fileText) {
+		
+		if(fileText)
+		{
+			fileText = md(fileText);
+		}
+		
+		res.render('content/terms.ejs', {
+			title: 'Terms and Privacy',
+			readme: fileText,
+			errors: err ? [err] : []
+		});
+	});
+};
+
+exports.admin_page = function(req, res) {
+	res.render('content/admin_page.ejs', {
+		title: 'Administrator'
+	});
+};
 
 exports['404'] = function(req, res) {
 	res.render('404', {

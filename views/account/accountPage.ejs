@@ -2,45 +2,33 @@
 
 <% if(!account) { %>
 	
-	<h1>Can't find <%=title%></h1>
+<h1>Can't find <%=title%></h1>
 	
-	<h2>:-/</h2>
+<h2>:-/</h2>
 	
 <% } else { 
+
+	// just so it doesnt break stuff
 	account.name = account.name || {};
 %>
 	
-	<h6>User account</h6>
+<h6>betasac account</h6>
 	
-	<h1><%= ( account.username || account._id ) %></h1>
+<div class="row-fluid">
+<div class="span5">
+	<h1 class="skinny">
+		<%= ( account.username || account._id ) %>
 	
+		<a href="/apps/<%=account.username%>" class="btn btn-success">apps</a>
+	</h1>
+	<span class="help-block"><%=account._id%></span>
+	<h5 class="help-block">last seen <%=account.lastLogin%></h5>
 	
-	<% if(user && user.admin && !account.admin) { %>
-	
-		<button onclick="ApiCall('/api/account/makeAdmin/<%=account._id%>');$(this).remove();"
-		class="btn btn-mini btn-primary pull-right">
-		make admin</button>
-		
-	
-	<% } else if(user && user.admin) { %>
-	
-		
-		<button onclick="ApiCall('/api/account/unmakeAdmin/<%=account._id%>');$(this).remove();"
-		class="btn btn-mini btn-warning pull-right">
-		unmake admin</button>
-		
-	<% } %>
-	
-	<h5><%=account._id%></h5>
-	<h4>
+	<h4 class="skinny">
 		<%=(account.name.givenName||"")%>
 		<%=(account.name.middleName||"")%>
 		<%=(account.name.familyName||"")%>
 	</h4>
-	<h5>last seen <%=account.lastLogin%></h5>
-	
-	<a href="/byuserid/<%=account._id%>" class="btn btn-success pull-right"><%=account.username%>'s apps</a>
-	
 	<% if(user && (user.admin || user._id.toString() == account._id.toString() ) ) { %>
 	
 	<h4><%=account.email%> <span class="help-block" style="display:inline-block">[not public]</span></h4>
@@ -74,6 +62,10 @@
 		<label>last name</label>
 		<input name="familyName" type="text" value="<%=(account.name.familyName||"")%>" />
 		
+		<label>profile description</label>
+		<span class="help-block">some html is ok</span>
+		<textarea name="description"><%=sanitize(account.description||"")%></textarea>
+		
 		<% if(account.provider=='local') { %>
 		
 		<label>password</label>
@@ -103,16 +95,50 @@
 	
 	<% if(user && (user.admin || user._id.toString() == account._id.toString() ) ) { %>
 		
-	<button onclick="$(this).next('button').show();$(this).remove();" class="btn">
+	<button onclick="$(this).next('div.well').show();$(this).remove();" class="btn">
 		more <i class="icon-chevron-down"></i>
 	</button>
 	
-	<button 
-	onclick="var c=confirm('really? impossible to undo.');if(c){ApiCall('/api/account/kill/<%=account._id%>');$(this).parent().remove();}"
-	class="btn btn-warning hide">DELETE ACCOUNT&nbsp;<i class='icon-remove icon-white'></i></button>
+	<div class="well hide">
+		<% if(user.admin && !account.admin) { %>
+	
+			<button onclick="ApiCall('/api/account/makeAdmin/<%=account._id%>');$(this).remove();"
+			class="btn btn-primary pull-right">
+				make admin
+				&nbsp;
+				<i class="icon-ok-sign"></i>
+			</button>
+			
+		
+		<% } else if(user.admin) { %>
+		
+			
+			<button onclick="ApiCall('/api/account/unmakeAdmin/<%=account._id%>');$(this).remove();"
+			class="btn btn-warning">
+				unmake admin
+				&nbsp;<i class="icon-remove-sign icon-white"></i>
+			</button>
+			
+		<% } %>
+		<button 
+		onclick="var c=confirm('really? impossible to undo.');if(c){ApiCall('/api/account/kill/<%=account._id%>');$(this).parent().remove();}"
+		class="btn btn-danger">DELETE ACCOUNT&nbsp;<i class='icon-remove icon-white'></i></button>
+	</div>
+	
 			
 	<% } %>
 	
 	
 	<% } %>
+</div>
+<div class="span7">
+	<div>
+		<%-sanitize(account.description||"")%>
+	</div>
+</div>
+</div>
+	
+	
+	
+	
 <% } %>

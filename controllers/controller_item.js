@@ -1,6 +1,7 @@
 
 var Item = require('mongoose').model('Item'),
-	Account = require('mongoose').model('Account');
+	Account = require('mongoose').model('Account'),
+	sanitize = require('sanitizer').sanitize;
 
 exports.view = {
 	
@@ -45,7 +46,10 @@ exports.getEdit = function(req, res) {
 		}
 		
 		// is this the same user who posted it
-		if(item && req.user && item.account_id != req.user._id.toString())
+		if(item && req.user 
+			&& item.account_id != req.user._id.toString()
+			&& !req.user.admin
+		)
 		{
 			err = ['Editing not allowed - this is not yours'];
 			return res.render('item/item', {
@@ -303,7 +307,7 @@ exports.create = function(req, res) {
 		account_id: 	req.user, // which account posted
 		title:			req.body.title || "",
 		test_type:		test_type,
-		description: 	req.body.description || "",
+		description: 	sanitize(req.body.description || "").replace(/\n/g,'<br />'),
 		website: 		req.body.website || "",
 		image:	 		req.body.image || "",
 		start_date: 	req.body.start_date ? new Date(req.body.start_date) : new Date(),
