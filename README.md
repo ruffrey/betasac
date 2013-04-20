@@ -49,6 +49,22 @@ Because it originated in Sacramento, California.
 #### Why is betasac necessary?
 The internet needed classified ads for developers and beta testers to meet.
 
+#### Can you describe Betasac.org in depth please?
+Betasac.org is a community of early adopters and developers.
+
+New apps can be posted in classified ads, grouped by genres. People searching for new apps will find these ads and join the beta tests.
+
+There are no restrictions on the type of software that can be posted on Betasac.org. Open source and closed source apps can be posted. Any platform is ok - web browser, flash, consoles like Xbox 360, etc. They can be games, business software, tax software, etc - anything at all. 
+
+One of the challenges for small developers and software startups is finding people to review their software while it is in the early stages. Paid betas can be very expensive and marketing resources typically are reserved for after release.
+
+A lot of software goes live without proper testing and feedback and because of this, huge numbers of startups die within a couple of years. Being locked into target markets is critical and publicizing a beta test is the perfect way to get people engaged early.
+
+On Betasac.org, all apps are treated the same. That means a software giant is provided the same amount of real estate as a one-person startup. 
+
+Through grassroots efforts, Betasac.org is seeking to drive traffic to beta tests and connect early adopters with the latest and greatest. Betasac.org is community driven, so administrators upkeep the quality of the content. The try to get rid of spam and false claims.
+
+Feel free to check out the code - it's at github.com/ruffrey/betasac - and get involved with the ongoing development of this community resource.
 
 <br />
 <br />
