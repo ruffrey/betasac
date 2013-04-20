@@ -307,7 +307,7 @@ exports.create = function(req, res) {
 		account_id: 	req.user, // which account posted
 		title:			req.body.title || "",
 		test_type:		test_type,
-		description: 	sanitize(req.body.description || "").replace(/\n/g,'<br />'),
+		description: 	sanitize(req.body.description || ""),
 		website: 		req.body.website || "",
 		image:	 		req.body.image || "",
 		start_date: 	req.body.start_date ? new Date(req.body.start_date) : new Date(),
@@ -332,8 +332,12 @@ exports.create = function(req, res) {
 				);
 			}
 			
-			if(item.account_id.toString()!=req.user._id.toString())
+			if(item.account_id.toString()!=req.user._id.toString()
+				&& !req.user.admin
+			)
 			{
+				item_update._id = req.body._id;
+				
 				return res.render('item/create', 
 					{ 
 						title: 'posted your beta',
@@ -358,7 +362,9 @@ exports.create = function(req, res) {
 		{
 			res.render('item/create', 
 				{ 
-					title: 'posted your beta',
+					title: req.body._id 
+						? 'error updating beta'
+						: 'error posting beta',
 					warning: 'Error occurred.',
 					errors: [err],
 					a: item_update
@@ -368,7 +374,14 @@ exports.create = function(req, res) {
 			return;
 		}
 		
-		res.redirect('/item/'+item._id+'?message=App+posted+successfully');
+		res.redirect(
+			'/item/' + item._id + '?message='
+			+ encodeURIComponent(
+				req.body._id
+				? 'App updated successfully'
+				: 'App posted successfully'
+			)
+		);
 		
 	}
 };

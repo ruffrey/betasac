@@ -124,7 +124,7 @@ $(function(){
 		<br /><%=item.end_date.toFormat('DDD YYYY-MM-DD H:MI P')%></h4>
 
 	<div class="well">
-		<h5>info</h5><%-sanitize(item.description||"")%></div>
+		<h5>info</h5><%-sanitize(item.description||"").replace(/\n/g,'<br />')%></div>
 	
 	<div class="row-fluid">
 	<div class="span6"><div class="well">

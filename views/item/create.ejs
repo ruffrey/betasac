@@ -1,7 +1,7 @@
 <%
 	var a;a=a||{};
 	
-	var editMode = !!a._id;
+	var editMode = a._id ? true : false;
 	
 	var testOther = typeof(a.test_type)!='undefined' && ['alpha','beta'].indexOf(a.test_type)==-1
 		? a.test_type : "";
