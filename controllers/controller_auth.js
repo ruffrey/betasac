@@ -39,6 +39,40 @@ exports.isAdmin = function(req, res, next) {
 	});
 	
 };
+exports.isAdminOrSelf = function(req, res, next) {
+	if(!req.user)
+	{
+		return res.send({
+			success: false,
+			message: 'Log in first'
+		});
+	}
+	
+	if(req.user._id.toString()!=req.params.id && !req.admin)
+	{
+		//res.statusCode = 401;
+		return res.send({
+			success: false,
+			message: 'You lack permission'
+		}); 
+	}
+	
+	/*Account.findById(req.user, function(err, user) {
+		
+		if(err) { 
+			return res.render('account/authError', {
+				title: "Auth error",
+				errors: ["You lack permission"]
+			}); 
+		}
+		
+		
+		
+		
+		
+	});*/
+	next();
+};
 
 exports.loginView = function(req, res) {
 	res.render('login', {

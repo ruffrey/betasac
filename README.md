@@ -7,7 +7,7 @@ Betasac exists to help you get the word out when your app is in alpha, beta or o
 ## Shortened terms
 There are no restrictions on software posted other than:
 - the poster acknowledges agreement to all terms, including that they can change without notice
-- you have legitimate rights to post that the app is in testing
+- you have legitimate rights to post that the app is in testing (it's not a leak)
 - the software *is* in testing when you state it is
 - the software it is not pornography and does not spread pornography
 - the software complies with all laws of the State of California as well as the jurisdictions of the software owner and poster

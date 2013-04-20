@@ -1,0 +1,89 @@
+/* SITE CSS*/
+.Ruffrey{
+	font-weight: 100;
+	font-size: 36px !important;
+}
+.smaller{
+	font-size: .9em !important;
+}
+div#notification_area{
+	width: 200px;
+	position: fixed;
+	top: 60px;
+	left: 10px;
+}
+div#notification_area div.alert{
+	display: block;
+	margin-bottom: 8px;
+} 
+div#ajaxLoader{
+	position: fixed;
+	bottom: 0;
+	right: 0;
+}
+
+div#PrimaryNav ul.nav li a{
+	display: inline-block;
+	text-transform: lowercase;
+	text-align: center;
+}
+div#PrimaryNav ul.nav li a:hover{
+	background: #f0f0f0;
+	color: #707070;
+}
+.item_template{
+	background: transparent;
+}
+.user_template h4,
+.item_template h4{
+	font-weight: 100;
+}
+.item_template:hover,
+.user_template:hover{
+	cursor:pointer;
+	border: 1px solid #000;
+}
+.item_template img{
+	max-width:70px;
+	max-height:70px;
+}
+.item_template .span4{
+	vertical-align: text-top;
+	text-align: right;
+}
+.expired{
+	background: #FFE1E1;
+	border: 1px solid #FF9191;
+}
+.expired:hover{
+	border: 1px solid #FF0000;
+}
+
+.tag{
+	padding: 4px;
+	line-height: 125%;
+	border: 1px solid transparent;
+	color: #c0c0c0;
+	display: inline-block;
+}
+.tag:hover{
+	text-decoration:none;
+	color: #c0c0c0;
+	border: 1px solid #000;
+}
+
+.comment{
+	padding: 4px;
+	cursor:pointer;
+}
+.comment:hover{
+	background: #f0f0f0;
+}
+.comment .comment_date{
+	color: #777;
+	display: inline-block;
+	width: 160px;
+}
+.comment .comment_text{
+	color: #000;
+}

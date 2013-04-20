@@ -2,7 +2,7 @@ var SUCCESS = '<div class="alert alert-success notif"><button type="button" clas
 
 	FAIL = '<div class="alert notif"><button type="button" class="close" data-dismiss="alert">&times;</button>{{message}}</div>',
 	
-	COMMENT = '<div class="comment" data-account_id="{{account_id}}"><span class="comment_date">{{date}}</span><span class="comment_text">{{text}}</span>';
+	COMMENT = '<div class="comment" data-account_id="{{account_id}}"><span class="comment_date">{{date}}</span><span class="comment_text">{{text}}</span></div>';
 	
 	page_nav_indicator = {
 		'item/create': 'post',
@@ -27,7 +27,7 @@ function setPageNav() {
 	if($el)
 	{
 		$el
-		.css('text-transform','uppercase')
+		.css('font-weight','100')
 		.css('borderBottom','3px solid black');
 	}
 }

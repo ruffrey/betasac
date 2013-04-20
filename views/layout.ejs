@@ -4,12 +4,13 @@
 	<title>betasac <%=(title?" | "+title:"")%></title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
-	<meta name="keywords" content="beta community, beta testing, new apps" />
+	<meta name="keywords" content="beta community, beta testing, new apps, find beta tests, new software, test betas, beta" />
 	<meta name="description" 
 		content="A community board for people seeking new apps in beta." />
 	
 	<link rel='stylesheet' href='/css/bootstrap.min.css' />
     <link rel='stylesheet' href='/css/bootstrap-responsive.min.css' />
+    <link rel='stylesheet' href='/css/style.css' />
     
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> 
 	<script src="http://twitter.github.com/hogan.js/builds/2.0.0/hogan-2.0.0.js"></script>
@@ -48,25 +49,21 @@
 				app testing community
 			</li>
 			<li class="nav_apps">
-				<a style="width:120px"
-					href="/">explore apps</a>
+				<a href="/">explore apps</a>
 			</li>
 			<li class="nav_community">
-				<a style="width:90px"
-					href="/account">community</a>
+				<a href="/account">community</a>
 			</li>
 			<li class="nav_post">
-				<a style="width:130px"
-					href="/item/create">post your app</a>
+				<a href="/item/create">post your app</a>
 			</li>
 			<% if(user) { %>
 			
 			<li>
-				<a style="width:50px"
-				href="/account/<%=(user.username||user._id||"")%>" 
-				title="<%=(user.username||user._id||"")%>">
+				<a href="/account/<%=(user.username||user._id||"")%>"
+					style="color:#777">
 					<i class="icon-user"></i>
-					me
+					<%=user.username%>
 				</a>
 			</li>
 				
@@ -93,7 +90,6 @@
 				<% } %>
 				<li class="nav_log">
 					<a href="/logout" id="LogoutLink"
-					 style="width:100px"
 					onmouseover="$(this).children('i').addClass('icon-circle-arrow-down').removeClass('icon-arrow-down');"
 					onmouseout="$(this).children('i').addClass('icon-arrow-down').removeClass('icon-circle-arrow-down');">
 						Log out&nbsp;
@@ -105,7 +101,6 @@
 				
 				<li class="nav_log">
 					<a href="/login" id="LoginLink"
-					style="width:100px"
 					onmouseover="$(this).children('i').addClass('icon-circle-arrow-right').removeClass('icon-arrow-right');"
 					onmouseout="$(this).children('i').addClass('icon-arrow-right').removeClass('icon-circle-arrow-right');">
 						Log in&nbsp;
@@ -174,7 +169,7 @@
 
 <div class="row-fluid">
 
-	<div class="span6">
+	<div class="span4">
 		<% if(app_messages.length > 0) { %>
 			<h5>Messages</h5>
 			
@@ -189,14 +184,15 @@
 		<% } %>
 		
 	</div>
+	<div class="span2">
+		<a href="/expired">view expired apps</a>
+	</div>
 	<div class="span3">
-		<a href="/expired">expired apps</a>
+		<a href="https://github.com/ruffrey/betasac">fork betasac on github</a>
 	</div>
 
 	<div class="span3">
-		<a href="https://github.com/ruffrey/betasac">fork me on github</a>
-		<br />
-		<a href="http://www.wiggleware.com">&copy; 2013 Wiggleware</a>
+		<a href="http://www.wiggleware.com">&copy; 2013 Wiggleware Tech Consultancy</a>
 	</div>
 
 </div>

@@ -42,8 +42,9 @@ exports.bind = function(app, passport) {
 	app.post('/account/update', controllers.account.update);
 
 
-	app.get('/api/account/kill/:id', controllers.auth.isAdmin, 
+	app.get('/api/account/kill/:id', controllers.auth.isAdminOrSelf, 
 		controllers.account.api.kill);
+	
 	app.get('/api/account/makeAdmin/:id', controllers.auth.isAdmin, 
 		controllers.account.api.makeAdmin);
 	app.get('/api/account/unmakeAdmin/:id', controllers.auth.isAdmin, 

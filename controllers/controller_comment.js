@@ -60,7 +60,7 @@ exports.api.create = function(req, res) {
 			
 		}).save(function(err, comment) {
 			res.send({
-				success: !!err,
+				success: !err,
 				message: err || 'Comment posted successfully',
 				comment: comment,
 				errors: err,

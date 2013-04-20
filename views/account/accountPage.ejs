@@ -18,7 +18,7 @@
 	<% if(user && user.admin && !account.admin) { %>
 	
 		<button onclick="ApiCall('/api/account/makeAdmin/<%=account._id%>');$(this).remove();"
-		class="btn btn-mini btn-success pull-right">
+		class="btn btn-mini btn-primary pull-right">
 		make admin</button>
 		
 	
@@ -34,14 +34,23 @@
 	<h5><%=account._id%></h5>
 	<h4>
 		<%=(account.name.givenName||"")%>
-		<%=(account.name.familyName||"")%>
 		<%=(account.name.middleName||"")%>
+		<%=(account.name.familyName||"")%>
 	</h4>
 	<h5>last seen <%=account.lastLogin%></h5>
-	<a href="/byuserid/<%=account._id%>" class="btn btn-success"><%=account.username%>'s apps</a>
 	
-	<% if(user && user._id.toString() == account._id.toString()) { %>
-	<div class="well">
+	<a href="/byuserid/<%=account._id%>" class="btn btn-success pull-right"><%=account.username%>'s apps</a>
+	
+	<% if(user && (user.admin || user._id.toString() == account._id.toString() ) ) { %>
+	
+	<h4><%=account.email%> <span class="help-block" style="display:inline-block">[not public]</span></h4>
+	
+	<button onclick="$(this).next('div').show();$(this).remove();"
+		class="btn">
+		update account info
+		<i class="icon-chevron-down"></i>
+	</button>
+	<div class="well hide">
 		<form method="post" action="/account/update">
 		<h3>update account info</h3>
 		
@@ -84,6 +93,26 @@
 		</button>
 		
 		</form>
+		
+		
 	</div>
-	<%  } %>
+	
+	
+	<br />
+	<br />
+	
+	<% if(user && (user.admin || user._id.toString() == account._id.toString() ) ) { %>
+		
+	<button onclick="$(this).next('button').show();$(this).remove();" class="btn">
+		more <i class="icon-chevron-down"></i>
+	</button>
+	
+	<button 
+	onclick="var c=confirm('really? impossible to undo.');if(c){ApiCall('/api/account/kill/<%=account._id%>');$(this).parent().remove();}"
+	class="btn btn-warning hide">DELETE ACCOUNT&nbsp;<i class='icon-remove icon-white'></i></button>
+			
+	<% } %>
+	
+	
+	<% } %>
 <% } %>

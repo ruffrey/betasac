@@ -49,7 +49,7 @@ $(function(){
 			data-id="<%=accounts[i]._id%>">
 			
 			<% if(user && user.admin) { %>
-			<button onclick="ApiCall('/api/account/kill/<%=accounts[i]._id%>');$(this).parent().remove();"
+			<button onclick="var c=confirm('really?');if(c){ApiCall('/api/account/kill/<%=accounts[i]._id%>');$(this).parent().remove();}"
 				class="btn btn-mini btn-warning"><i class='icon-remove icon-white'></i></button>
 				
 			<% } %>

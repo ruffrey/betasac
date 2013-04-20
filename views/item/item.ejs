@@ -8,7 +8,7 @@
 <script src="/js/item.js"></script>
 <script>
 $(function(){
-
+	// getting account
 	ApiCall('/account/<%=item.account_id%>?/json/', function(data) {
 		if(data.account) 
 		{
@@ -16,18 +16,21 @@ $(function(){
 		}
 	});
 	
+	// reporting an issue
 	$('#reportit').click(function(){
 		report($('#txt').val(), '<%=item._id%>');
 		$(this).parent().remove();
 		$('#btnrep').remove();
 	});
 	
+	// 
 	$('#item_comments_list h4').click(function(){
 		$(this).text('Loading comments');
 		
 		loadcomments('<%=item._id%>', $('#item_comments_list') );
 	});
 	
+	// posting a comment
 	$('button#btnComment').click(function(){
 	
 		if($('#comment_text').val().length < 5)
@@ -44,7 +47,13 @@ $(function(){
 			dataType: 'json',
 			error: ApiFail,
 			success: ApiSuccessWrap(function(data){
-				$('#item_comments_list').prepend( crapstash2(COMMENT, data.comment) );
+				console.log(data);
+				if(data.success)
+				{
+					$('#item_comments_list').prepend( 
+						crapstash2(COMMENT, data.comment) 
+					);
+				}
 			}),
 			data: {
 				text: $('#comment_text').val()
