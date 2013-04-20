@@ -30,7 +30,7 @@
   <button type="submit" class="btn">go</button>
 </form>
 <form class="form-search" method="get" action=""
-	onsubmit="if($('#user-query').val().length>0){(this).attr('action','/apps/'+$('#user-query').val());}else{return false;}">
+	onsubmit="if($('#user-query').val().length>0){$(this).attr('action','/apps/'+$('#user-query').val());}else{return false;}">
   <input type="text" id="user-query" placeholder="developer"
 	class="input-medium search-query">
   <button type="submit" class="btn">go</button>
