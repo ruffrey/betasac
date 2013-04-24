@@ -42,6 +42,15 @@ exports.bind = function(app, passport) {
 	app.post('/account/update', controllers.account.update);
 
 
+	app.get('/api', function(req, res) {
+		res.send({
+			success: true,
+			api_version: 0.1
+		});
+	});
+	
+
+
 	app.get('/api/account/kill/:id', controllers.auth.isAdminOrSelf, 
 		controllers.account.api.kill);
 	
@@ -91,6 +100,9 @@ exports.bind = function(app, passport) {
 	
 	
 	// votes
+	
+	app.get('/popular', controllers.vote.popular);
+	
 	app.get('/api/vote/byUser/:id', controllers.vote.api.getByUser);
 	
 	app.get('/api/vote/all', controllers.vote.api.all); // get all votes

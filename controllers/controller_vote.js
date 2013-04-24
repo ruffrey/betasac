@@ -2,7 +2,83 @@ var Item = require('mongoose').model('Item'),
 	Vote = require('mongoose').model('Vote'),
 	ObjectId = require('mongoose').Schema.ObjectId;
 
+exports.popular = function(req, res) {
+	// first, aggregate the votes
+	
+	Vote.aggregate([
+		{ 
+			$group: { 
+				_id: "$item_id",
+				sum: { 
+				   $sum: "$val" 
+				} 
+			} 
+		}
+	], function(err, votes) {
+		console.log( 'aggregation'.bold.blue, err, votes);
+		if(err)
+		{
+			return res.render('index', {
+				title: 'oooops',
+				message: err
+			});
+		}
+		
+		// load onto an object for easier matching
+		var objVotes = {};
+		
+		votes.forEach(function(o) {
+			
+			objVotes[o._id] = o.sum;
+			
+		});
+		
+		console.log('objVotes'.bold.blue, objVotes);
+		
+		// now get all of the applicable items
+		
+		Item.find({
+			
+			end_date: {$gte: new Date()}
+			
+		}, function(err, items) {
+			if(err)
+			{
+				return res.render('index', {
+					title: 'oooops',
+					message: err
+				});
+			}
+			
+			// and load the sum onto it
+			for(var i=0; i<items.length; i++)
+			{
+				items[i].sum = objVotes[items[i].id] || 0;
+			}
+			
+			items.sort(function(a,b){
+				return a.sum < b.sum;
+			});
+			
+			res.render('index', {
+				title: 'popular apps',
+				items: items
+			});
+			
+		});
+		
+		
+		
+	});
+};
+
+
+// 
+// API
+//
+
 exports.api = function(req, res) {
+	
 	
 };
 

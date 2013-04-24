@@ -28,6 +28,7 @@
   <input type="text" id="genre-query" placeholder="genres"
 	class="input-medium search-query">
   <button type="submit" class="btn">go</button>
+  <a href="/popular" class="pull-right">popular</a>
 </form>
 <form class="form-search" method="get" action=""
 	onsubmit="if($('#user-query').val().length>0){$(this).attr('action','/apps/'+$('#user-query').val());}else{return false;}">
@@ -53,7 +54,11 @@
 	)%>" data-id="<%=items[i]._id%>">
 	<div class="row-fluid">
 	<div class="span8">
-		<h4><%=items[i].title%></h4>
+		<h4><%=( typeof( items[i].sum ) != "undefined"
+					? "("+ items[i].sum +")"
+					: ""
+			)%>
+			<%=items[i].title%></h4>
 	</div>
 	<div class="span4">
 		<img src="<%=items[i].image%>" class="pull-right"/>
