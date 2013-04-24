@@ -16,6 +16,12 @@ $(function(){
 		}
 	});
 	
+	// getting votes
+	getvotes('<%=item._id%>', function(data) {
+		console.log(data);
+		$('#votes').text(data.results.sum);
+	});
+	
 	// reporting an issue
 	$('#reportit').click(function(){
 		report($('#txt').val(), '<%=item._id%>');
@@ -94,6 +100,16 @@ $(function(){
 	<h1 style="text-align:center;"><img src="<%=item.image%>" /></h1>
 	
 	<h1>
+		<div class="voter">
+			<div class="btn btn-mini" onclick="upvote('<%=item._id%>')">
+				<i class="icon-chevron-up"></i>
+			</div>
+			<div class="votelabel" id="votes">?</div>
+			<div class="btn btn-mini" onclick="downvote('<%=item._id%>')">
+				<i class="icon-chevron-down"></i>
+			</div>
+		</div>
+		
 		<%=item.title%>
 		&nbsp;&nbsp;
 		<a class="btn" id="acct_<%=item.account_id%>" 
@@ -118,10 +134,10 @@ $(function(){
 		<%	}
 		%>
 	</h1>
+	<br />
 	
-	
-	<h4><%=item.start_date.toFormat('DDD YYYY-MM-DD H:MI P')%> 
-		<br /><%=item.end_date.toFormat('DDD YYYY-MM-DD H:MI P')%></h4>
+	<h4>from <%=item.start_date.toFormat('DDD YYYY-MM-DD H:MI P')%> 
+		<br />to <%=item.end_date.toFormat('DDD YYYY-MM-DD H:MI P')%></h4>
 
 	<div class="well">
 		<h5>info</h5><%-sanitize(item.description||"").replace(/\n/g,'<br />')%></div>

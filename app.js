@@ -19,6 +19,7 @@ var express = require('express')
   , Account = require('./models/account.js')
   , Item = require('./models/item.js')
   , Comment = require('./models/comment.js')
+  , Vote = require('./models/vote.js')
   
   , passport = require('passport')
   , strategies = require('./models/strategies.js')
@@ -68,9 +69,14 @@ MongoConnection.once('open', function() {
 
 
 // Registering mongoose models for global usage on mongoose require
+
 mongoose.model('Account', Account.Account);
 mongoose.model('Item', Item.Item);
+mongoose.model('Comment', Comment.Comment);
+mongoose.model('Vote', Vote.Vote);
 
+
+// Configurations
 app.configure(function(){
 	
 	app.use(express.cookieParser(config.secret));
@@ -120,21 +126,21 @@ app.configure(function(){
 	
 	app.use(expressLayouts);
 	
+	// use the URL router middleware
+	app.use(app.router);
+	
 });
 
 app.configure('development', function(){
 	app.use(express.errorHandler());
 });
 
-app.configure(function(){
-	app.use(app.router);
-});
 
 // Router is bound here
 route_table.bind(app, passport);
 
 // Starting up the app
 http.createServer(app).listen(app.get('port'), function(){
-	console.log(D(), "App alive on port ".blue.bold, app.get('port'));
+	console.log(D(), "Betasac is alive on port ".blue.bold, app.get('port'));
 	console.log("config".bold.inverse, config);
 });

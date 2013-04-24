@@ -90,6 +90,17 @@ exports.bind = function(app, passport) {
 	app.post('/api/item/report/:id',  controllers.item.api.report); 
 	
 	
+	// votes
+	app.get('/api/vote/byUser/:id', controllers.vote.api.getByUser);
+	
+	app.get('/api/vote/all', controllers.vote.api.all); // get all votes
+	
+	app.get('/api/vote/listByItem/:id', controllers.vote.api.voteListByItem); // get all votes for item
+	
+	app.get('/api/vote/aggregate/:id', controllers.vote.api.aggregate); // get vote tally
+	
+	app.post('/api/vote/:id/:val', controllers.auth.isAuthorizedAjax, controllers.vote.api.vote);
+	
 	app.get('/admin', controllers.auth.isAdmin, controllers.admin_page);
 	app.get('/terms', controllers.terms);
 	

@@ -11,6 +11,17 @@ exports.isAuthorized = function(req, res, next) {
 	next();
 };
 
+exports.isAuthorizedAjax = function(req, res, next) {
+	if(!req.user)
+	{
+		return res.send({
+			success: false,
+			message: 'Log in first'
+		});
+	}
+	next();
+};
+
 exports.isAdmin = function(req, res, next) {
 	if(!req.user)
 	{

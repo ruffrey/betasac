@@ -37,3 +37,4 @@ exports.account = require('./controller_account.js');
 exports.item = require('./controller_item.js');
 exports.auth = require('./controller_auth.js');
 exports.comment = require('./controller_comment.js');
+exports.vote = require('./controller_vote.js');

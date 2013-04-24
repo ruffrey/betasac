@@ -90,3 +90,18 @@ div#PrimaryNav ul.nav li a:hover{
 .skinny{
 	font-weight: 100;
 }
+div.voter{
+	text-align: center;
+	width: 40px!important;
+	float: left;
+	margin-right: 10px;
+}
+div.voter div{
+	float: none;
+	display: block;
+	clear: both;
+}
+div.votelabel{
+	font-size: 18px;
+	font-weight: 100;
+}
